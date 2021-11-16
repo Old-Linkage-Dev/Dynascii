@@ -1,0 +1,4 @@
+
+*.log
+*/.local/*
+*__pycache__*
