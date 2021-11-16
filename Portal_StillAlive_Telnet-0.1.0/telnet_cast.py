@@ -101,7 +101,7 @@ class shell(threading.Thread):
             _conn.shutdown(socket.SHUT_RDWR);
             _pipe.close();
             _proc.kill();
-        except BrokenPipeError or ConnectionAbortedError or ConnectionResetError as err:
+        except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             _conn.close();
             _pipe.close();
             _proc.kill();

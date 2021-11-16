@@ -95,13 +95,7 @@ class shell(threading.Thread):
                         _sends += line[:-1].encode('ascii') + b'\r\n';
             _conn.shutdown(socket.SHUT_RDWR);
             time.sleep(2);
-        except BrokenPipeError as err:
-            _conn.close();
-            logger.info('User %s connection aborted.' % hex(id(self)));
-        except ConnectionAbortedError as err:
-            _conn.close();
-            logger.info('User %s connection aborted.' % hex(id(self)));
-        except ConnectionResetError as err:
+        except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             _conn.close();
             logger.info('User %s connection aborted.' % hex(id(self)));
         except Exception as err:
