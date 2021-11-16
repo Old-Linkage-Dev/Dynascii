@@ -36,7 +36,7 @@ interval = 0.125;
 #
 # telnet_cast.py by Tarcadia
 # November 2021
-#
+# Application can be found on telnet://dynascii.tarcadia.site:6024
 
 
 import socket;

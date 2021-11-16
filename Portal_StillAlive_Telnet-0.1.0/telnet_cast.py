@@ -35,7 +35,7 @@ SHELL = 'python ./still_alive_credit_fortelnet.py';
 #
 # telnet_cast.py by Tarcadia
 # November 2021
-#
+# Application can be found on telnet://dynascii.tarcadia.site:6023
 
 
 import socket;
