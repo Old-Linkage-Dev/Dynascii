@@ -33,7 +33,7 @@ class Shell(threading.Thread):
                         _sends = b'\x1Bc\x1B[H';
                         _l = 0;
                     else:
-                        _sends += line[:-1].encode('ascii') + b'\r\n';
+                        _sends += line[:-1].encode('utf8') + b'\r\n';
             self.conn.shutdown(socket.SHUT_RDWR);
             time.sleep(2);
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
