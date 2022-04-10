@@ -54,7 +54,7 @@ while args:
         BACKLOGS = int(args.pop(0));
     elif len(args) >= 1 and s.lower() == "--poolsize":
         POOL_SIZE = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--poolthread":
+    elif len(args) >= 1 and s.lower() == "--pthread":
         PTHREAD = __import__(args.pop(0)).PoolThread;
     elif len(args) >= 1 and s.lower() == "--shell":
         SHELL = __import__(args.pop(0)).Shell;
@@ -68,6 +68,7 @@ logger.info(
     '  - PORT            = %d\n' % PORT +
     '  - BACKLOG         = %d\n' % BACKLOGS +
     '  - POOL_SIZE       = %d\n' % POOL_SIZE +
+    '  - PTHREAD         = %s\n' % PTHREAD +
     '  - SHELL           = %s\n' % SHELL +
     '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in KWARGS.items()]) +
     '.');
