@@ -11,12 +11,11 @@ POOL_SIZE = 32;
 SHELL = __import__("nullshell").Shell;
 
 import sys;
+import time;
 import socket;
 import logging;
-import traceback;
 
-logger = logging.getLogger(__name__);
-logger.setLevel(logging.DEBUG);
+from poolthread import PoolThread;
 
 
 
@@ -74,40 +73,31 @@ server = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 server.bind((HOST, PORT));
 server.listen(BACKLOG);
 server.setblocking(True);
-userpool = [];
+pool = [];
 
-while True:
-    try:
-        conn, addr = server.accept();
-        rl = [];
-        ipps = {addr[0] : 0};
-        tps = 0;
-        for ip, port, user in userpool:
-            if user.is_alive():
-                tps += 1;
-                if (ip in ipps):
-                    ipps[ip] += 1;
-                else:
-                    ipps[ip] = 1;
-            else:
-                rl.append((ip, port, user));
-        for userdata in rl:
-            userpool.remove(userdata);
-        if (tps < TOTAL_POOL_SIZE and ipps[addr[0]] < IP_POOL_SIZE):
-            user = SHELL(conn = conn, logger = logger, **ARGS);
-            userdata = (*addr, user);
-            userpool.append(userdata);
-            logger.info('User new [%s] @%s:%d.' % (user.name, *addr));
-            user.start();
-        else:
-            user = SHELL_REJECT(conn = conn, logger = logger);
-            logger.info('User pool overflow [%s] @%s:%d.' % (user.name, *addr));
-            user.start();
-    except BlockingIOError:
-        continue;
-    except Exception as err:
-        logger.error(err);
-        logger.debug(traceback.format_exc());
-        logger.critical('Main Loop run into an exception.');
-        break;
+for poolid in range(POOL_SIZE):
+    pthread = PoolThread(poolid = poolid, server = server, Shell = SHELL, **KWARGS);
+    logger.info("Pool thread [%s] starting..." % pthread.name);
+    pool.append(pthread);
+    pthread.start();
 
+try:
+    while True:
+        time.sleep(60);
+        for poolid in range(POOL_SIZE):
+            if not pool[poolid].is_alive():
+                pthread = PoolThread(poolid = poolid, server = server, Shell = SHELL, **KWARGS);
+                logger.info("Pool thread [%s] is dead, restarting [%s]..." % (pool[poolid].name, pthread.name));
+                pool[poolid] = pthread;
+                pthread.start();
+except KeyboardInterrupt:
+    logger.info("Ending...");
+    for poolid in range(POOL_SIZE):
+        if pool[poolid].is_alive():
+            pool[poolid].running = False;
+    server.setblocking(False);
+    for poolid in range(POOL_SIZE):
+        if pool[poolid].is_alive():
+            pool[poolid].join();
+    logger.info("Ended.");
+    
