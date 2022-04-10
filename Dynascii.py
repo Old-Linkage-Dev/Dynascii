@@ -6,7 +6,7 @@ LOG_FILE = './telnet_cast.log';
 HOST = '127.0.0.1'
 PORT = 23;
 
-BACKLOG = 16;
+BACKLOGS = 16;
 POOL_SIZE = 32;
 SHELL = __import__("nullshell").Shell;
 
@@ -50,8 +50,8 @@ while args:
         HOST = args.pop(0);
     elif len(args) >= 1 and s.lower() == "--port":
         PORT = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--backlog":
-        BACKLOG = int(args.pop(0));
+    elif len(args) >= 1 and s.lower() == "--backlogs":
+        BACKLOGS = int(args.pop(0));
     elif len(args) >= 1 and s.lower() == "--poolsize":
         POOL_SIZE = int(args.pop(0));
     elif len(args) >= 1 and s.lower() == "--shell":
@@ -64,7 +64,7 @@ logger.info(
     '  - LOG_FILE        = %s\n' % LOG_FILE +
     '  - HOST            = %s\n' % HOST +
     '  - PORT            = %d\n' % PORT +
-    '  - BACKLOG         = %d\n' % BACKLOG +
+    '  - BACKLOG         = %d\n' % BACKLOGS +
     '  - POOL_SIZE       = %d\n' % POOL_SIZE +
     '  - SHELL           = %s\n' % SHELL +
     '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in KWARGS.items()]) +
@@ -73,7 +73,7 @@ logger.info('Running...');
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 server.bind((HOST, PORT));
-server.listen(BACKLOG);
+server.listen(BACKLOGS);
 server.setblocking(True);
 pool = [];
 
