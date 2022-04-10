@@ -38,6 +38,8 @@ _logger_ch_scrn.setFormatter(_logger_formatter_scrn);
 logger = logging.getLogger("dynascii").getChild("main");
 logger.addHandler(_logger_ch_scrn);
 
+
+
 KWARGS = {};
 args = sys.argv[1:];
 while args:
