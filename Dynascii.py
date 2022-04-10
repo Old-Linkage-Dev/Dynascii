@@ -100,9 +100,9 @@ except KeyboardInterrupt:
     for poolid in range(POOL_SIZE):
         if pool[poolid].is_alive():
             pool[poolid].running = False;
-    server.setblocking(False);
-    for poolid in range(POOL_SIZE):
-        if pool[poolid].is_alive():
-            pool[poolid].join();
+    if not server.getblocking():
+        for poolid in range(POOL_SIZE):
+            if pool[poolid].is_alive():
+                pool[poolid].join();
     logger.info("Ended.");
     
