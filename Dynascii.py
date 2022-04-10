@@ -17,6 +17,27 @@ import time;
 import socket;
 import logging;
 
+KWARGS = {};
+args = sys.argv[1:];
+while args:
+    s = args.pop(0);
+    if len(args) >= 1 and s.lower() == "--log":
+        LOG_FILE = args.pop(0);
+    elif len(args) >= 1 and s.lower() == "--host":
+        HOST = args.pop(0);
+    elif len(args) >= 1 and s.lower() == "--port":
+        PORT = int(args.pop(0));
+    elif len(args) >= 1 and s.lower() == "--backlogs":
+        BACKLOGS = int(args.pop(0));
+    elif len(args) >= 1 and s.lower() == "--poolsize":
+        POOL_SIZE = int(args.pop(0));
+    elif len(args) >= 1 and s.lower() == "--pthread":
+        PTHREAD = __import__(args.pop(0)).PoolThread;
+    elif len(args) >= 1 and s.lower() == "--shell":
+        SHELL = __import__(args.pop(0)).Shell;
+    elif len(args) >= 1 and s.startswith("--"):
+        KWARGS[s[2:]] = args.pop(0);
+
 
 
 _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
@@ -39,27 +60,6 @@ logger = logging.getLogger("dynascii").getChild("main");
 logger.addHandler(_logger_ch_scrn);
 
 
-
-KWARGS = {};
-args = sys.argv[1:];
-while args:
-    s = args.pop(0);
-    if len(args) >= 1 and s.lower() == "--log":
-        LOG_FILE = args.pop(0);
-    elif len(args) >= 1 and s.lower() == "--host":
-        HOST = args.pop(0);
-    elif len(args) >= 1 and s.lower() == "--port":
-        PORT = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--backlogs":
-        BACKLOGS = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--poolsize":
-        POOL_SIZE = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--pthread":
-        PTHREAD = __import__(args.pop(0)).PoolThread;
-    elif len(args) >= 1 and s.lower() == "--shell":
-        SHELL = __import__(args.pop(0)).Shell;
-    elif len(args) >= 1 and s.startswith("--"):
-        KWARGS[s[2:]] = args.pop(0);
 
 logger.info(
     'Parametered with \n' +
