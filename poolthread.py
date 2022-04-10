@@ -27,6 +27,7 @@ class PoolThread(threading.Thread):
         self.iplimit = iplimit;
         self.kwargs = kwargs;
         self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
+        self.setDaemon(True);
     
     def run(self):
         while self.running:
@@ -42,6 +43,7 @@ class PoolThread(threading.Thread):
                     n = PoolThread.ippool[ip];
                 if (n <= self.iplimit):
                     user = self.Shell(conn = conn, **self.kwargs);
+                    user.setDaemon(False);
                     logger.info('User new [%s] @%s:%d.' % (user.name, *addr));
                     user.start();
                     user.join();

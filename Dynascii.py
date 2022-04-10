@@ -104,5 +104,5 @@ except KeyboardInterrupt:
         for poolid in range(POOL_SIZE):
             if pool[poolid].is_alive():
                 pool[poolid].join();
-    logger.info("Ended.");
+        logger.info("Ended.");
     
