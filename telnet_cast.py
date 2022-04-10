@@ -67,7 +67,7 @@ logger.info(
     '  - TOTAL_POOL_SIZE = %d\n' % TOTAL_POOL_SIZE +
     '  - IP_POOL_SIZE    = %d\n' % IP_POOL_SIZE +
     '  - SHELL           = %s\n' % SHELL +
-    '\n'.join(['  - %16s= %s\n' % (key, val) for key, val in ARGS.items()]) +
+    '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in ARGS.items()]) +
     '...');
 logger.info('Running...');
 
