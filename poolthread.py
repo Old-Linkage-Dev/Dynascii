@@ -52,6 +52,11 @@ class PoolThread(threading.Thread):
                     conn.send("It is of my most sorrow that there are too many visit. It may require a wait for it to be available.\r\n".encode("utf8"));
                     ##conn.send("It is of my most sorrow that there are too many visit. It may require a wait for it to be available.\n".encode("utf8"));
                     conn.close();
+                with PoolThread.ippool_lock:
+                    if ip in PoolThread.ippool:
+                        PoolThread.ippool[ip] -= 1;
+                        if PoolThread.ippool[ip] == 0:
+                            PoolThread.ippool.pop(ip);
             except BlockingIOError:
                 continue;
             except Exception as err:
