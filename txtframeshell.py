@@ -10,6 +10,7 @@ class Shell(threading.Thread):
 
     def __init__(self, conn, logger, txtframefile, interval = 0.125) -> None:
         super().__init__();
+        self.name = '[%s.%s]' % (__name__, hex(id(self)));
         self.conn = conn;
         self.logger = logger;
         self.txtframefile = str(txtframefile);

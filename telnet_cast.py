@@ -100,11 +100,11 @@ while True:
             user = SHELL(conn = conn, logger = logger, **ARGS);
             userdata = (*addr, user);
             userpool.append(userdata);
-            logger.info('User new [%s] @%s:%d.' % (hex(id(user)), *addr));
+            logger.info('User new [%s] @%s:%d.' % (user.name, *addr));
             user.start();
         else:
             user = SHELL_REJECT(conn = conn, logger = logger);
-            logger.info('User pool overflow [%s] @%s:%d.' % (hex(id(user)), *addr));
+            logger.info('User pool overflow [%s] @%s:%d.' % (user.name, *addr));
             user.start();
     except BlockingIOError:
         continue;
