@@ -7,11 +7,8 @@ HOST = '127.0.0.1'
 PORT = 23;
 
 BACKLOG = 16;
-TOTAL_POOL_SIZE = 32;
-IP_POOL_SIZE = 8;
-
+POOL_SIZE = 32;
 SHELL = __import__("nullshell").Shell;
-SHELL_REJECT = __import__("rejshell").Shell;
 
 import sys;
 import socket;
@@ -35,7 +32,7 @@ logger.addHandler(_logger_ch_scrn);
 logger.addHandler(_logger_ch_file);
 
 
-ARGS = {};
+KWARGS = {};
 args = sys.argv[1:];
 while args:
     s = args.pop(0);
@@ -47,16 +44,12 @@ while args:
         PORT = int(args.pop(0));
     elif len(args) >= 1 and s.lower() == "--backlog":
         BACKLOG = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--tps":
-        TOTAL_POOL_SIZE = int(args.pop(0));
-    elif len(args) >= 1 and s.lower() == "--ipps":
-        IP_POOL_SIZE = int(args.pop(0));
+    elif len(args) >= 1 and s.lower() == "--poolsize":
+        POOL_SIZE = int(args.pop(0));
     elif len(args) >= 1 and s.lower() == "--shell":
         SHELL = __import__(args.pop(0)).Shell;
-    elif len(args) >= 1 and s.lower() == "--shellrej":
-        SHELL_REJECT = __import__(args.pop(0)).Shell;
     elif len(args) >= 1 and s.startswith("--"):
-        ARGS[s[2:]] = args.pop(0);
+        KWARGS[s[2:]] = args.pop(0);
 
 logger.info(
     'Parametered with \n' +
@@ -64,14 +57,11 @@ logger.info(
     '  - HOST            = %s\n' % HOST +
     '  - PORT            = %d\n' % PORT +
     '  - BACKLOG         = %d\n' % BACKLOG +
-    '  - TOTAL_POOL_SIZE = %d\n' % TOTAL_POOL_SIZE +
-    '  - IP_POOL_SIZE    = %d\n' % IP_POOL_SIZE +
+    '  - POOL_SIZE       = %d\n' % POOL_SIZE +
     '  - SHELL           = %s\n' % SHELL +
-    '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in ARGS.items()]) +
-    '...');
+    '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in KWARGS.items()]) +
+    '.');
 logger.info('Running...');
-
-
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
 server.bind((HOST, PORT));
