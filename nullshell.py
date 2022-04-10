@@ -15,7 +15,7 @@ logger.addHandler(_logger_ch_scrn);
 
 class Shell(threading.Thread):
     
-    def __init__(self, conn, logger, *args, **kargs) -> None:
+    def __init__(self, conn, *args, **kargs) -> None:
         super().__init__();
         self.name = "NullShell(%s)" % hex(id(self));
         self.conn = conn;
