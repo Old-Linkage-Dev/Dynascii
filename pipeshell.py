@@ -21,7 +21,7 @@ class Shell(threading.Thread):
 
     def __init__(self, conn, logger, pipeshell) -> None:
         super().__init__();
-        self.name = '%s.%s' % (__name__, hex(id(self)));
+        self.name = 'PipeShell(%s)' % hex(id(self));
         self.conn = conn;
         self.pipeshell = pipeshell;
         return;
