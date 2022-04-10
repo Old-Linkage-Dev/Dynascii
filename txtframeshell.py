@@ -34,7 +34,7 @@ class Shell(threading.Thread):
                 _sends = b'\x1Bc\x1B[H';
                 _t = time.time();
                 _f = 0;
-                _l = 0;
+                logger.info('Frame play to start.');
                 for line in _fp.readlines():
                     if line == '$FRAME_END$\n':
                         _f += 1;
@@ -42,9 +42,11 @@ class Shell(threading.Thread):
                             time.sleep(0.01);
                         self.conn.send(_sends);
                         _sends = b'\x1Bc\x1B[H';
-                        _l = 0;
                     else:
                         _sends += line[:-1].encode('utf8') + b'\r\n';
+                    if _f % 200 == 0:
+                        logger.info('Frame play #%d' % _f);
+                logger.info('Frame play ended.');
             self.conn.shutdown(socket.SHUT_RDWR);
             time.sleep(2);
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
