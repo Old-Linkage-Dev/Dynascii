@@ -19,7 +19,7 @@ logger.addHandler(_logger_ch_scrn);
 
 class Shell(threading.Thread):
 
-    def __init__(self, conn, logger, txtframefile, interval = 0.125) -> None:
+    def __init__(self, conn, txtframefile, interval = 0.125, *args, **kwargs) -> None:
         super().__init__();
         self.name = 'TXTFrameShell(%s)' % hex(id(self));
         self.conn = conn;

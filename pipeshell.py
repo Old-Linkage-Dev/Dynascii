@@ -19,7 +19,7 @@ logger.addHandler(_logger_ch_scrn);
 
 class Shell(threading.Thread):
 
-    def __init__(self, conn, logger, pipeshell) -> None:
+    def __init__(self, conn, pipeshell, *args, **kwargs) -> None:
         super().__init__();
         self.name = 'PipeShell(%s)' % hex(id(self));
         self.conn = conn;
