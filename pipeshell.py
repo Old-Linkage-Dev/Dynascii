@@ -17,7 +17,7 @@ class Shell(threading.Thread):
         return;
 
     def run(self) -> None:
-        self.logger.info('[%s] >> Running pipe shell...' % hex(id(self)));
+        self.logger.info('[%s] >> Running pipe shell...' % self.name);
         try:
             _proc = subprocess.Popen(
                 self.pipeshell,
@@ -33,7 +33,7 @@ class Shell(threading.Thread):
             _pipe = None;
             self.logger.debug(err);
             self.logger.debug(traceback.format_exc());
-            self.logger.critical('[%s] >> Shell start failed.' % hex(id(self)));
+            self.logger.critical('[%s] >> Shell start failed.' % self.name);
             return;
         try:
             _chrs = b'\x00';
@@ -48,13 +48,13 @@ class Shell(threading.Thread):
             self.conn.close();
             _pipe.close();
             _proc.kill();
-            self.logger.info('[%s] >> User connection aborted.' % hex(id(self)));
+            self.logger.info('[%s] >> User connection aborted.' % self.name);
         except Exception as err:
             self.conn.close();
             _pipe.close();
             _proc.kill();
             self.logger.error(err);
             self.logger.debug(traceback.format_exc());
-            self.logger.critical('[%s] >> Shell failed.' % hex(id(self)));
-        self.logger.info('[%s] >> User ended.' % hex(id(self)));
+            self.logger.critical('[%s] >> Shell failed.' % self.name);
+        self.logger.info('[%s] >> User ended.' % self.name);
         return;

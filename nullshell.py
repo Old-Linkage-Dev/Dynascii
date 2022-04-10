@@ -11,5 +11,5 @@ class Shell(threading.Thread):
         return;
 
     def run(self) -> None:
-        self.logger.info('[%s] >> Running null shell...' % hex(id(self)));
+        self.logger.info('[%s] >> Running null shell...' % self.name);
         self.conn.close();

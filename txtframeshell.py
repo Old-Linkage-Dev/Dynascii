@@ -18,7 +18,7 @@ class Shell(threading.Thread):
         return;
 
     def run(self) -> None:
-        self.logger.info('[%s] >> Running text frame shell...' % hex(id(self)));
+        self.logger.info('[%s] >> Running text frame shell...' % self.name);
         try:
             with open(self.txtframefile, mode = 'r') as _fp:
                 _sends = b'\x1Bc\x1B[H';
@@ -39,11 +39,11 @@ class Shell(threading.Thread):
             time.sleep(2);
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             self.conn.close();
-            self.logger.info('[%s] >> User connection aborted.' % hex(id(self)));
+            self.logger.info('[%s] >> User connection aborted.' % self.name);
         except Exception as err:
             self.conn.close();
             self.logger.error(err);
             self.logger.debug(traceback.format_exc());
-            self.logger.critical('[%s] >> Shell failed.' % hex(id(self)));
-        self.logger.info('[%s] >> User ended.' % hex(id(self)));
+            self.logger.critical('[%s] >> Shell failed.' % self.name);
+        self.logger.info('[%s] >> User ended.' % self.name);
         return;
