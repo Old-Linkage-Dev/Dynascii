@@ -8,14 +8,14 @@ PORT = 23;
 
 BACKLOGS = 16;
 POOL_SIZE = 32;
+
+PTHREAD = __import__("poolthread").PoolThread;
 SHELL = __import__("nullshell").Shell;
 
 import sys;
 import time;
 import socket;
 import logging;
-
-from poolthread import PoolThread;
 
 
 
@@ -54,6 +54,8 @@ while args:
         BACKLOGS = int(args.pop(0));
     elif len(args) >= 1 and s.lower() == "--poolsize":
         POOL_SIZE = int(args.pop(0));
+    elif len(args) >= 1 and s.lower() == "--poolthread":
+        PTHREAD = __import__(args.pop(0)).PoolThread;
     elif len(args) >= 1 and s.lower() == "--shell":
         SHELL = __import__(args.pop(0)).Shell;
     elif len(args) >= 1 and s.startswith("--"):
@@ -78,7 +80,7 @@ server.setblocking(True);
 pool = [];
 
 for poolid in range(POOL_SIZE):
-    pthread = PoolThread(poolid = poolid, server = server, Shell = SHELL, **KWARGS);
+    pthread = PTHREAD(poolid = poolid, server = server, Shell = SHELL, **KWARGS);
     logger.info("Pool thread [%s] starting..." % pthread.name);
     pool.append(pthread);
     pthread.start();
@@ -88,7 +90,7 @@ try:
         time.sleep(60);
         for poolid in range(POOL_SIZE):
             if not pool[poolid].is_alive():
-                pthread = PoolThread(poolid = poolid, server = server, Shell = SHELL, **KWARGS);
+                pthread = PTHREAD(poolid = poolid, server = server, Shell = SHELL, **KWARGS);
                 logger.info("Pool thread [%s] is dead, restarting [%s]..." % (pool[poolid].name, pthread.name));
                 pool[poolid] = pthread;
                 pthread.start();
