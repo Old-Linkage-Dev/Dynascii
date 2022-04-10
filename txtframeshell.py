@@ -42,10 +42,10 @@ class Shell(threading.Thread):
                             time.sleep(0.01);
                         self.conn.send(_sends);
                         _sends = b'\x1Bc\x1B[H';
+                        if _f % 200 == 0:
+                            logger.info('Frame play #%d' % _f);
                     else:
                         _sends += line[:-1].encode('utf8') + b'\r\n';
-                    if _f % 200 == 0:
-                        logger.info('Frame play #%d' % _f);
                 logger.info('Frame play ended.');
             self.conn.shutdown(socket.SHUT_RDWR);
             time.sleep(2);
