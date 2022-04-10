@@ -24,7 +24,7 @@ class PoolThread(threading.Thread):
         self.poolid = poolid;
         self.server = server;
         self.Shell = Shell;
-        self.iplimit = iplimit;
+        self.iplimit = int(iplimit);
         self.kwargs = kwargs;
         self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
         self.setDaemon(True);
