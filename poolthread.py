@@ -16,15 +16,15 @@ logger.addHandler(_logger_ch_scrn);
 class PoolThread(threading.Thread):
 
     ippool = {};
-    iplimit = 8;
     ippool_lock = threading.Lock();
 
-    def __init__(self, poolid, server, Shell, *args, **kwargs):
+    def __init__(self, poolid, server, Shell, iplimit = 8, *args, **kwargs):
         super().__init__();
         self.running = True;
         self.poolid = poolid;
         self.server = server;
         self.Shell = Shell;
+        self.iplimit = iplimit;
         self.kwargs = kwargs;
         self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
     
@@ -40,7 +40,7 @@ class PoolThread(threading.Thread):
                     else:
                         PoolThread.ippool[ip] = 1;
                     n = PoolThread.ippool[ip];
-                if (n <= PoolThread.iplimit):
+                if (n <= self.iplimit):
                     user = self.Shell(conn = conn, **self.kwargs);
                     logger.info('User new [%s] @%s:%d.' % (user.name, *addr));
                     user.start();
