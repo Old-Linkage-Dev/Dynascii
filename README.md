@@ -1,20 +1,35 @@
 # Dynascii
 
 DDDDDDDDDDDDD       YYYYYYY       YYYYYYYNNNNNNNN        NNNNNNNN               AAA                 SSSSSSSSSSSSSSS         CCCCCCCCCCCCCIIIIIIIIIIIIIIIIIIII
+
 D::::::::::::DDD    Y:::::Y       Y:::::YN:::::::N       N::::::N              A:::A              SS:::::::::::::::S     CCC::::::::::::CI::::::::II::::::::I
+
 D:::::::::::::::DD  Y:::::Y       Y:::::YN::::::::N      N::::::N             A:::::A            S:::::SSSSSS::::::S   CC:::::::::::::::CI::::::::II::::::::I
+
 DDD:::::DDDDD:::::D Y::::::Y     Y::::::YN:::::::::N     N::::::N            A:::::::A           S:::::S     SSSSSSS  C:::::CCCCCCCC::::CII::::::IIII::::::II
+
   D:::::D    D:::::DYYY:::::Y   Y:::::YYYN::::::::::N    N::::::N           A:::::::::A          S:::::S             C:::::C       CCCCCC  I::::I    I::::I  
+  
   D:::::D     D:::::D  Y:::::Y Y:::::Y   N:::::::::::N   N::::::N          A:::::A:::::A         S:::::S            C:::::C                I::::I    I::::I  
+  
   D:::::D     D:::::D   Y:::::Y:::::Y    N:::::::N::::N  N::::::N         A:::::A A:::::A         S::::SSSS         C:::::C                I::::I    I::::I  
+  
   D:::::D     D:::::D    Y:::::::::Y     N::::::N N::::N N::::::N        A:::::A   A:::::A         SS::::::SSSSS    C:::::C                I::::I    I::::I  
+  
   D:::::D     D:::::D     Y:::::::Y      N::::::N  N::::N:::::::N       A:::::A     A:::::A          SSS::::::::SS  C:::::C                I::::I    I::::I  
+  
   D:::::D     D:::::D      Y:::::Y       N::::::N   N:::::::::::N      A:::::AAAAAAAAA:::::A            SSSSSS::::S C:::::C                I::::I    I::::I  
+  
   D:::::D     D:::::D      Y:::::Y       N::::::N    N::::::::::N     A:::::::::::::::::::::A                S:::::SC:::::C                I::::I    I::::I  
+  
   D:::::D    D:::::D       Y:::::Y       N::::::N     N:::::::::N    A:::::AAAAAAAAAAAAA:::::A               S:::::S C:::::C       CCCCCC  I::::I    I::::I  
+  
 DDD:::::DDDDD:::::D        Y:::::Y       N::::::N      N::::::::N   A:::::A             A:::::A  SSSSSSS     S:::::S  C:::::CCCCCCCC::::CII::::::IIII::::::II
+
 D:::::::::::::::DD      YYYY:::::YYYY    N::::::N       N:::::::N  A:::::A               A:::::A S::::::SSSSSS:::::S   CC:::::::::::::::CI::::::::II::::::::I
+
 D::::::::::::DDD        Y:::::::::::Y    N::::::N        N::::::N A:::::A                 A:::::AS:::::::::::::::SS      CCC::::::::::::CI::::::::II::::::::I
+
 DDDDDDDDDDDDD           YYYYYYYYYYYYY    NNNNNNNN         NNNNNNNAAAAAAA                   AAAAAAASSSSSSSSSSSSSSS           CCCCCCCCCCCCCIIIIIIIIIIIIIIIIIIII
 
 ## What it is?
