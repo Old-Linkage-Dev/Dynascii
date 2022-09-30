@@ -6,7 +6,7 @@ Dynascii is a light-weighted utility or application to casting things to Telnet.
 
 ## Can I have a preview?
 
-Demos can be found at [_telnet dynascii.tarcadia.site 6023_](telnet://dynascii.tarcadia.site:6023) for Still Alive and at [_telnet dynascii.tarcadia.site 6024_](telnet://dynascii.tarcadia.site:6024) for Bad Apple.
+Demos can be found at [_telnet dynascii.tarcadia.net 6023_](telnet://dynascii.tarcadia.net:6023) for Still Alive and at [_telnet dynascii.tarcadia.net 6024_](telnet://dynascii.tarcadia.net:6024) for Bad Apple.
 
 ## How it comes?
 
