@@ -105,7 +105,10 @@ if __name__ == "__main__":
         '.');
     logger.info('Running...');
 
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM);
+    server = (
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        if not args.use_v6 else socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+    );
     server.bind((args.host, args.port));
     server.listen(args.backlogs);
     server.setblocking(True);
