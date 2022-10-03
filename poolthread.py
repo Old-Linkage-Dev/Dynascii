@@ -44,11 +44,11 @@ class PoolThread(threading.Thread):
                 if (n <= self.iplimit):
                     user = self.Shell(conn = conn, **self.kwargs);
                     user.setDaemon(False);
-                    logger.info('User new [%s] @%s:%d.' % (user.name, *addr));
+                    logger.info('User new [%s] @%s:%d.' % (user.name, *addr[:2]));
                     user.start();
                     user.join();
                 else:
-                    logger.info('Request flood in @%s:%d.' % addr);
+                    logger.info('Request flood in @%s:%d.' % addr[:2]);
                     conn.send(b'\x1Bc\x1B[H');
                     conn.send('It is my sorrow that this program detected some flood in request from this IP.\r\n'.encode("utf8"));
                     conn.send('It may be a wrong detection but I have to block you outside.\r\n'.encode("utf8"));
