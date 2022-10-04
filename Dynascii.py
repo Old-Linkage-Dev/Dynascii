@@ -61,15 +61,16 @@ if __name__ == "__main__":
 
     args = parser.parse_args(args_dynascii);
 
-    kwargs = {};
+    kwargs_pool_thread = {};
     while args_pool_thread:
         s = args_pool_thread.pop(0);
         if len(args_pool_thread) >= 1 and s.startswith("--"):
-            kwargs[s[2:]] = args_pool_thread.pop(0);
+            kwargs_pool_thread[s[2:]] = args_pool_thread.pop(0);
+    kwargs_shell = {};
     while args_shell:
         s = args_shell.pop(0);
         if len(args_shell) >= 1 and s.startswith("--"):
-            kwargs[s[2:]] = args_shell.pop(0);
+            kwargs_shell[s[2:]] = args_shell.pop(0);
     
     _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
     _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8') if args.log_file else None;
@@ -101,7 +102,10 @@ if __name__ == "__main__":
         '  - POOL_SIZE       = %d\n' % args.pool_size +
         '  - PTHREAD         = %s\n' % args.class_pool_thread +
         '  - SHELL           = %s\n' % args.class_shell +
-        '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in KWARGS.items()]) +
+        '  --' +
+        '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in kwargs_pool_thread.items()]) +
+        '  ---' +
+        '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in kwargs_shell.items()]) +
         '.');
     logger.info('Running...');
 
@@ -115,7 +119,7 @@ if __name__ == "__main__":
     pool = [];
 
     for poolid in range(args.pool_size):
-        pthread = args.class_pool_thread(poolid = poolid, server = server, Shell = args.class_shell, **kwargs);
+        pthread = args.class_pool_thread(poolid = poolid, server = server, Shell = args.class_shell, kwarg_shell = kwargs_shell, **kwargs_pool_thread);
         logger.info("Pool thread [%s] starting..." % pthread.name);
         pool.append(pthread);
         pthread.start();
@@ -125,7 +129,7 @@ if __name__ == "__main__":
             time.sleep(60);
             for poolid in range(args.pool_size):
                 if not pool[poolid].is_alive():
-                    pthread = args.class_pool_thread(poolid = poolid, server = server, Shell = args.class_shell, **kwargs);
+                    pthread = args.class_pool_thread(poolid = poolid, server = server, Shell = args.class_shell, kwarg_shell = kwargs_shell, **kwargs_pool_thread);
                     logger.info("Pool thread [%s] is dead, restarting [%s]..." % (pool[poolid].name, pthread.name));
                     pool[poolid] = pthread;
                     pthread.start();
