@@ -66,10 +66,10 @@ if __name__ == "__main__":
         s = args_pool_thread.pop(0);
         if len(args_pool_thread) >= 1 and s.startswith("--"):
             kwargs[s[2:]] = args_pool_thread.pop(0);
-    while args_pool_thread:
-        s = args_pool_thread.pop(0);
-        if len(args_pool_thread) >= 1 and s.startswith("--"):
-            kwargs[s[2:]] = args_pool_thread.pop(0);
+    while args_shell:
+        s = args_shell.pop(0);
+        if len(args_shell) >= 1 and s.startswith("--"):
+            kwargs[s[2:]] = args_shell.pop(0);
     
     _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
     _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8') if args.log_file else None;
