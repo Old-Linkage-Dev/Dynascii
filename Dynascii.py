@@ -152,4 +152,4 @@ if __name__ == "__main__":
             for poolid in range(args.pool_size):
                 if pool[poolid].is_alive():
                     pool[poolid].join();
-            logger.info("Ended.");
+        logger.info("Ended.");
