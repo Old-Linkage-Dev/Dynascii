@@ -50,14 +50,14 @@ if __name__ == "__main__":
         args_shell = [];
 
     parser = argparse.ArgumentParser(description = open("./README.md", 'r').read());
-    parser.add_argument("-l", "--log",  dest = "log_file", type = str, default = None,                          help = "str : path to log file");
-    parser.add_argument("-6",           dest = "use_v6", action = "store_true", default = False,                help = "flag : use IPv6");
-    parser.add_argument("-h", "--host", dest = "host", type = str, default = "",                                help = "str : server hostname");
-    parser.add_argument("-p", "--port", dest = "port", type = uint16, default = 23,                             help = "server port");
-    parser.add_argument("--backlogs",   dest = "backlogs", type = uint, default = 16,                           help = "server backlogs");
-    parser.add_argument("--poolsize",   dest = "pool_size", type = uint, default = 32,                          help = "server thread pool size");
-    parser.add_argument("--pthread",    dest = "class_pool_thread", type = _PoolThread, default = "poolthread", help = "module : thread in pool");
-    parser.add_argument("--shell",      dest = "class_shell", type = _Shell, default = "nullshell",             help = "module : shell");
+    parser.add_argument("--log",        dest = "log_file", type = str, default = None,                          help = "str : path to log file");
+    parser.add_argument("-6",           dest = "use_v6", action = "store_true", default = False,                help = "flag : use of IPv6");
+    parser.add_argument("--host",       dest = "host", type = str, default = "",                                help = "str : hostname of server");
+    parser.add_argument("--port",       dest = "port", type = uint16, default = 23,                             help = "uint16 : port of server");
+    parser.add_argument("--backlogs",   dest = "backlogs", type = uint, default = 16,                           help = "uint : backlogs of server");
+    parser.add_argument("--poolsize",   dest = "pool_size", type = uint, default = 32,                          help = "uint : size of server thread pool");
+    parser.add_argument("--poolthread", dest = "class_pool_thread", type = _PoolThread, default = "poolthread", help = "module : name of pooled thread module");
+    parser.add_argument("--shell",      dest = "class_shell", type = _Shell, default = "nullshell",             help = "module : name of shell module");
 
     args = parser.parse_args(args_dynascii);
 
