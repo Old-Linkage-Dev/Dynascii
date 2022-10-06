@@ -22,7 +22,7 @@ def Shell(*args, **kwargs):
         conn.close();
 
     for arg in args:
-        logger.warning('Unrecognized arg : %s' % arg);
+        logger.debug('Unrecognized arg : %s' % arg);
     for key in kwargs:
-        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+        logger.debug("Unrecognized arg : %s : %s" % (key, kwargs[key]));
     return run;
