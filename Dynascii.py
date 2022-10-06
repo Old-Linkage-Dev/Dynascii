@@ -114,10 +114,11 @@ if __name__ == "__main__":
             self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
             self.daemon = True;
         def run(self):
-            logger.info('%s started.' % thread.name);
+            logger.debug('%s started.' % thread.name);
             while self.running:
                 try:
                     conn, addr = server.accept();
+                    logger.debug('%s calling a shell.' % thread.name);
                     args.shell(conn, addr);
                 except BlockingIOError:
                     continue;
