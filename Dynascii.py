@@ -18,11 +18,11 @@ if __name__ == "__main__":
             return default;
     
     sysargs = sys.argv[1:];
-    index_shell = try_default(lambda:sysargs.index("--"), -1);
+    index_arg_spliter = try_default(lambda:sysargs.index("--"), -1);
 
-    if (index_shell != -1):
-        args_dynascii = sysargs[ : index_shell];
-        args_shell = sysargs[index_shell + 1 : ];
+    if (index_arg_spliter != -1):
+        args_dynascii = sysargs[ : index_arg_spliter];
+        args_shell = sysargs[index_arg_spliter + 1 : ];
     else:
         args_dynascii = sysargs[ : ];
         args_shell = [];
