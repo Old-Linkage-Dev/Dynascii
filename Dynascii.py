@@ -76,6 +76,8 @@ if __name__ == "__main__":
         if len(args_shell) >= 1 and s.startswith("--"):
             kwargs_shell[s[2:]] = args_shell.pop(0);
     
+    shell = args.class_shell(**kwargs_shell);
+
     _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
     _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8') if args.log_file else None;
     _logger_ch_file.setLevel(logging.DEBUG);
@@ -123,7 +125,7 @@ if __name__ == "__main__":
     pool = [];
 
     for poolid in range(args.pool_size):
-        pthread = args.class_pool_thread(poolid = poolid, server = server, Shell = args.class_shell, kwarg_shell = kwargs_shell, **kwargs_pool_thread);
+        pthread = args.class_pool_thread(poolid = poolid, server = server, shell = shell, **kwargs_pool_thread);
         logger.info("Pool thread [%s] starting..." % pthread.name);
         pool.append(pthread);
         pthread.start();
@@ -133,7 +135,7 @@ if __name__ == "__main__":
             time.sleep(60);
             for poolid in range(args.pool_size):
                 if not pool[poolid].is_alive():
-                    pthread = args.class_pool_thread(poolid = poolid, server = server, Shell = args.class_shell, kwarg_shell = kwargs_shell, **kwargs_pool_thread);
+                    pthread = args.class_pool_thread(poolid = poolid, server = server, shell = shell, **kwargs_pool_thread);
                     logger.info("Pool thread [%s] is dead, restarting [%s]..." % (pool[poolid].name, pthread.name));
                     pool[poolid] = pthread;
                     pthread.start();
