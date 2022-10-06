@@ -3,7 +3,6 @@
 
 import time;
 import socket;
-import threading;
 import logging;
 import traceback;
 
@@ -17,20 +16,14 @@ logger.addHandler(_logger_ch_scrn);
 
 
 
-class Shell(threading.Thread):
+def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
 
-    def __init__(self, conn, txtframefile, interval = 0.125, *args, **kwargs) -> None:
-        super().__init__();
-        self.name = 'TXTFrameShell(%s)' % hex(id(self));
-        self.conn = conn;
-        self.txtframefile = str(txtframefile);
-        self.interval = float(interval);
-        return;
+    interval = float(interval);
 
-    def run(self) -> None:
+    def run(conn) -> None:
         logger.info('Running text frame shell...');
         try:
-            with open(self.txtframefile, mode = 'r') as _fp:
+            with open(txtframefile, mode = 'r') as _fp:
                 _sends = b'\x1Bc\x1B[H';
                 _t = time.time();
                 _f = 0;
@@ -38,24 +31,30 @@ class Shell(threading.Thread):
                 for line in _fp.readlines():
                     if line == '$FRAME_END$\n':
                         _f += 1;
-                        while time.time() - _t < _f * self.interval:
+                        while time.time() - _t < _f * interval:
                             time.sleep(0.01);
-                        self.conn.send(_sends);
+                        conn.send(_sends);
                         _sends = b'\x1Bc\x1B[H';
                         if _f % 200 == 0:
                             logger.info('Frame play #%d' % _f);
                     else:
                         _sends += line[:-1].encode('utf8') + b'\r\n';
                 logger.info('Frame play ended.');
-            self.conn.shutdown(socket.SHUT_RDWR);
+            conn.shutdown(socket.SHUT_RDWR);
             time.sleep(2);
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
-            self.conn.close();
+            conn.close();
             logger.info('User connection aborted.');
         except Exception as err:
-            self.conn.close();
+            conn.close();
             logger.error(err);
             logger.debug(traceback.format_exc());
             logger.critical('Shell failed.');
         logger.info('User ended.');
         return;
+    
+    for arg in args:
+        logger.warning('Unrecognized arg : %s' % arg);
+    for key in kwargs:
+        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+    return run;
