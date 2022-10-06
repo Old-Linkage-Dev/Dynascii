@@ -2,15 +2,12 @@
 # -*- coding: UTF-8 -*-
 
 import argparse;
-
 import sys;
 import time;
 import socket;
 import logging;
 
 if __name__ == "__main__":
-
-    from numpy import uint, uint16;
 
     def _PoolThread(module : str):
         return __import__(module).PoolThread;
@@ -26,6 +23,20 @@ if __name__ == "__main__":
             return f();
         except:
             return default;
+    
+    def uint(val):
+        val = int(val);
+        if val >= 0:
+            return val;
+        else:
+            raise ValueError();
+    
+    def uint16(val):
+        val = int(val);
+        if val >= 0 and val <= 65535:
+            return val;
+        else:
+            raise ValueError();
 
     sysargs = sys.argv[1:];
     index_pool_thread = try_default(lambda:sysargs.index("--"), -1);
