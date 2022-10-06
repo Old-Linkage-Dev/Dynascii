@@ -104,7 +104,7 @@ if __name__ == "__main__":
         '  - PORT            = %d\n' % args.port +
         '  - BACKLOG         = %d\n' % args.backlogs +
         '  - POOL_SIZE       = %d\n' % args.pool_size +
-        '  - PTHREAD         = %s\n' % args.class_pool_thread +
+        '  - POOLTHREAD      = %s\n' % args.class_pool_thread +
         '  - SHELL           = %s\n' % args.class_shell +
         '  --' +
         '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in kwargs_pool_thread.items()]) +
