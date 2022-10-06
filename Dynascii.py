@@ -17,6 +17,9 @@ if __name__ == "__main__":
 
     def _Shell(module : str):
         return __import__(module).Shell;
+    
+    def _LoggerLevel(level : str):
+        return logging._nameToLevel[level];
 
     def try_default(f, default):
         try:
@@ -51,6 +54,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description = open("./README.md", 'r').read());
     parser.add_argument("--log",        dest = "log_file", type = str, default = None,                          help = "str : path to log file");
+    parser.add_argument("--log-level",  dest = "log_level", type = _LoggerLevel, default = logging.INFO,        help = "str : name of logging level");
     parser.add_argument("-6",           dest = "use_v6", action = "store_true", default = False,                help = "flag : use of IPv6");
     parser.add_argument("--host",       dest = "host", type = str, default = "",                                help = "str : hostname of server");
     parser.add_argument("--port",       dest = "port", type = uint16, default = 23,                             help = "uint16 : port of server");
@@ -85,7 +89,7 @@ if __name__ == "__main__":
 
     _logger_formatter_scrn = logging.Formatter(fmt='\033[0m%(asctime)s \033[1;34m[%(levelname)s]\033[0;33m >> \033[0;35m[%(threadName)s]\033[0;33m >> \033[0m%(message)s', datefmt='%H:%M');
     _logger_ch_scrn = logging.StreamHandler();
-    _logger_ch_scrn.setLevel(logging.INFO);
+    _logger_ch_scrn.setLevel(args.log_level);
     _logger_ch_scrn.setFormatter(_logger_formatter_scrn);
 
     logger = logging.getLogger("dynascii").getChild("main");
