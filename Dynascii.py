@@ -34,10 +34,16 @@ if __name__ == "__main__":
             kwargs_shell[s[2:]] = args_shell.pop(0);
     
     def _Shell(module : str):
-        return __import__(module).Shell(**kwargs_shell);
+        try:
+            return __import__(module).Shell(**kwargs_shell);
+        except:
+            raise argparse.ArgumentError(message = "Fail to load shell indicated, check shell name and shell args");
     
     def _LoggerLevel(level : str):
-        return logging._nameToLevel[level];
+        try:
+            return logging._nameToLevel[level];
+        except:
+            raise ValueError();
 
     def uint(val):
         val = int(val);
