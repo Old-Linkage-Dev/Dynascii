@@ -3,7 +3,6 @@
 
 import socket;
 import subprocess;
-import threading;
 import logging;
 import traceback;
 
@@ -17,20 +16,13 @@ logger.addHandler(_logger_ch_scrn);
 
 
 
-class Shell(threading.Thread):
+def Shell(pipeshell : str, *args, **kwargs):
 
-    def __init__(self, conn, pipeshell, *args, **kwargs) -> None:
-        super().__init__();
-        self.name = 'PipeShell(%s)' % hex(id(self));
-        self.conn = conn;
-        self.pipeshell = pipeshell;
-        return;
-
-    def run(self) -> None:
+    def run(conn) -> None:
         logger.info('Running pipe shell...');
         try:
             _proc = subprocess.Popen(
-                self.pipeshell,
+                pipeshell,
                 stdin = subprocess.DEVNULL,
                 stdout = subprocess.PIPE,
                 stderr = subprocess.DEVNULL,
@@ -38,7 +30,7 @@ class Shell(threading.Thread):
             );
             _pipe = _proc.stdout;
         except Exception as err:
-            self.conn.close();
+            conn.close();
             _proc = None;
             _pipe = None;
             logger.debug(err);
@@ -50,17 +42,17 @@ class Shell(threading.Thread):
             #self.conn.send(b'\033[0;33m');
             while _proc.poll() == None and _chrs != b'':
                 _chrs = _pipe.read(1);
-                self.conn.send(_chrs);
-            self.conn.shutdown(socket.SHUT_RDWR);
+                conn.send(_chrs);
+            conn.shutdown(socket.SHUT_RDWR);
             _pipe.close();
             _proc.kill();
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
-            self.conn.close();
+            conn.close();
             _pipe.close();
             _proc.kill();
             logger.info('User connection aborted.');
         except Exception as err:
-            self.conn.close();
+            conn.close();
             _pipe.close();
             _proc.kill();
             logger.error(err);
@@ -68,3 +60,9 @@ class Shell(threading.Thread):
             logger.critical('Shell failed.');
         logger.info('User ended.');
         return;
+
+    for arg in args:
+        logger.warning('Unrecognized arg : %s' % arg);
+    for key in kwargs:
+        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+    return run;
