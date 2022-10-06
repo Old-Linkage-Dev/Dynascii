@@ -18,13 +18,12 @@ class PoolThread(threading.Thread):
     ippool = {};
     ippool_lock = threading.Lock();
 
-    def __init__(self, poolid, server, Shell, kwargs_shell, iplimit = 8, *args, **kwargs):
+    def __init__(self, poolid, server, shell, iplimit = 8, *args, **kwargs):
         super().__init__();
         self.running = True;
         self.poolid = poolid;
         self.server = server;
-        self.Shell = Shell;
-        self.kwargs_shell =  kwargs_shell;
+        self.shell = shell;
         self.iplimit = int(iplimit);
         self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
         self.setDaemon(True);
@@ -42,11 +41,8 @@ class PoolThread(threading.Thread):
                         PoolThread.ippool[ip] = 1;
                     n = PoolThread.ippool[ip];
                 if (n <= self.iplimit):
-                    user = self.Shell(conn = conn, **self.kwargs_shell);
-                    user.setDaemon(False);
-                    logger.info('User new [%s] @%s:%d.' % (user.name, *addr[:2]));
-                    user.start();
-                    user.join();
+                    logger.info('User new [%s] @%s:%d.' % (self.name, *addr[:2]));
+                    self.shell(conn);
                 else:
                     logger.info('Request flood in @%s:%d.' % addr[:2]);
                     conn.send(b'\x1Bc\x1B[H');
