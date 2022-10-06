@@ -12,7 +12,7 @@ logger.addHandler(_logger_ch_scrn);
 
 
 
-def IplimitWrapperShell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str = "nullshell", *args, **kwargs):
+def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str = "nullshell", *args, **kwargs):
 
     ip_pool = {};
     ip_pool_lock = threading.Lock();
