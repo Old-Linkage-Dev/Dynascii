@@ -92,7 +92,7 @@ if __name__ == "__main__":
         '  - BACKLOG         = %d\n' % args.backlogs +
         '  - POOL_SIZE       = %d\n' % args.pool_size +
         '  - SHELL           = %s\n' % args.shell +
-        '  --' +
+        '  --\n' +
         '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in kwargs_shell.items()]) +
         '.');
     logger.info('Running...');
