@@ -9,35 +9,12 @@ import logging;
 
 if __name__ == "__main__":
 
-    def _PoolThread(module : str):
-        return __import__(module).PoolThread;
-
-    def _Shell(module : str):
-        return __import__(module).Shell;
-    
-    def _LoggerLevel(level : str):
-        return logging._nameToLevel[level];
-
     def try_default(f, default):
         try:
             return f();
         except:
             return default;
     
-    def uint(val):
-        val = int(val);
-        if val >= 0:
-            return val;
-        else:
-            raise ValueError();
-    
-    def uint16(val):
-        val = int(val);
-        if val >= 0 and val <= 65535:
-            return val;
-        else:
-            raise ValueError();
-
     sysargs = sys.argv[1:];
     index_pool_thread = try_default(lambda:sysargs.index("--"), -1);
     index_shell = try_default(lambda:sysargs.index("---"), -1);
@@ -63,6 +40,40 @@ if __name__ == "__main__":
         args_pool_thread = [];
         args_shell = [];
 
+    kwargs_pool_thread = {};
+    while args_pool_thread:
+        s = args_pool_thread.pop(0);
+        if len(args_pool_thread) >= 1 and s.startswith("--"):
+            kwargs_pool_thread[s[2:]] = args_pool_thread.pop(0);
+    kwargs_shell = {};
+    while args_shell:
+        s = args_shell.pop(0);
+        if len(args_shell) >= 1 and s.startswith("--"):
+            kwargs_shell[s[2:]] = args_shell.pop(0);
+    
+    def _PoolThread(module : str):
+        return __import__(module).PoolThread(**kwargs_pool_thread);
+
+    def _Shell(module : str):
+        return __import__(module).Shell(**kwargs_shell);
+    
+    def _LoggerLevel(level : str):
+        return logging._nameToLevel[level];
+
+    def uint(val):
+        val = int(val);
+        if val >= 0:
+            return val;
+        else:
+            raise ValueError();
+    
+    def uint16(val):
+        val = int(val);
+        if val >= 0 and val <= 65535:
+            return val;
+        else:
+            raise ValueError();
+
     parser = argparse.ArgumentParser(description = open("./README.md", 'r').read());
     parser.add_argument("--log",        dest = "log_file", type = str, default = None,                          help = "str : path to log file");
     parser.add_argument("--log-level",  dest = "log_level", type = _LoggerLevel, default = logging.INFO,        help = "str : name of logging level");
@@ -76,18 +87,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args(args_dynascii);
 
-    kwargs_pool_thread = {};
-    while args_pool_thread:
-        s = args_pool_thread.pop(0);
-        if len(args_pool_thread) >= 1 and s.startswith("--"):
-            kwargs_pool_thread[s[2:]] = args_pool_thread.pop(0);
-    kwargs_shell = {};
-    while args_shell:
-        s = args_shell.pop(0);
-        if len(args_shell) >= 1 and s.startswith("--"):
-            kwargs_shell[s[2:]] = args_shell.pop(0);
-    
-    shell = args.class_shell(**kwargs_shell);
 
     _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
     _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8') if args.log_file else None;
@@ -136,7 +135,7 @@ if __name__ == "__main__":
     pool = [];
 
     for poolid in range(args.pool_size):
-        pthread = args.class_pool_thread(poolid = poolid, server = server, shell = shell, **kwargs_pool_thread);
+        pthread = args.class_pool_thread(poolid = poolid, server = server, shell = args.class_shell);
         logger.info("Pool thread [%s] starting..." % pthread.name);
         pool.append(pthread);
         pthread.start();
@@ -146,7 +145,7 @@ if __name__ == "__main__":
             time.sleep(60);
             for poolid in range(args.pool_size):
                 if not pool[poolid].is_alive():
-                    pthread = args.class_pool_thread(poolid = poolid, server = server, shell = shell, **kwargs_pool_thread);
+                    pthread = args.class_pool_thread(poolid = poolid, server = server, shell = args.class_shell);
                     logger.info("Pool thread [%s] is dead, restarting [%s]..." % (pool[poolid].name, pthread.name));
                     pool[poolid] = pthread;
                     pthread.start();
