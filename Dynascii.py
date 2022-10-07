@@ -143,7 +143,6 @@ if __name__ == "__main__":
                 try:
                     conn, addr = server.accept();
                     logger.debug('%s calling a shell.' % self.name);
-                    args.shell(conn, addr);
                 except BlockingIOError:
                     if args.no_blocking_delay > 0:
                         time.sleep(args.no_blocking_delay);
@@ -155,6 +154,7 @@ if __name__ == "__main__":
                     logger.debug(traceback.format_exc());
                     logger.critical('%s run into an exception.' % self.name);
                     break;
+                args.shell(conn, addr);
             logger.info('%s ended.' % self.name);
 
     logger.info('Starting tasks...');
