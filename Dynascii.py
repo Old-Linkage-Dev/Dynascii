@@ -137,7 +137,7 @@ if __name__ == "__main__":
             super().__init__();
             self.running = True;
             self.poolid = poolid;
-            self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
+            self.name = 'PoolThread#%d' % self.poolid;
             self.daemon = True;
         def run(self):
             logger.info('%s started.' % self.name);
