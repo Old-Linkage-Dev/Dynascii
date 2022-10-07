@@ -9,6 +9,25 @@ import threading;
 import logging;
 import traceback;
 
+def formatMessage(record: logging.LogRecord) -> str:
+    if record.threadName == 'MainThread':
+        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;35m[Main]\033[0;33m >> \033[0m{record.message}';
+    elif record.module == 'Dynascii':
+        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;31m[{record.threadName}]\033[0;33m >> \033[0m{record.message}';
+    else:
+        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;31m[{record.threadName}]\033[0;33m >> \033[0;33m[{record.module}]\033[0;33m >> \033[0m{record.message}';
+
+logger = logging.getLogger("dynascii");
+logger.setLevel(logging.DEBUG);
+logger_formatter_stream = logging.Formatter(fmt='\033[0m%(asctime)s \033[1;34m[%(levelname)s]\033[0;33m >> \033[0;35m[%(threadName)s]\033[0;33m >> \033[0m%(message)s', datefmt='%H:%M');
+logger_formatter_stream.datefmt = '%H:%M';
+logger_formatter_stream.formatMessage = formatMessage;
+logger_ch_stream = logging.StreamHandler();
+logger_ch_stream.setFormatter(logger_formatter_stream);
+logger.addHandler(logger_ch_stream);
+
+
+
 if __name__ == "__main__":
 
     def try_default(f, default):
@@ -71,24 +90,14 @@ if __name__ == "__main__":
 
     args = parser.parse_args(args_dynascii);
 
-    _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
-    _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8') if args.log_file else None;
-    _logger_ch_file.setLevel(logging.DEBUG);
-    _logger_ch_file.setFormatter(_logger_formatter_file);
+    if args.log_file:
+        _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
+        _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8');
+        _logger_ch_file.setLevel(logging.DEBUG);
+        _logger_ch_file.setFormatter(_logger_formatter_file);
+        logger.addHandler(_logger_ch_file);
 
-    _logger_root = logging.getLogger("dynascii");
-    _logger_root.setLevel(logging.DEBUG);
-    _logger_root.addHandler(_logger_ch_file) if args.log_file else ...;
-
-    _logger_formatter_scrn = logging.Formatter(fmt='\033[0m%(asctime)s \033[1;34m[%(levelname)s]\033[0;33m >> \033[0;35m[%(threadName)s]\033[0;33m >> \033[0m%(message)s', datefmt='%H:%M');
-    _logger_ch_scrn = logging.StreamHandler();
-    _logger_ch_scrn.setLevel(args.log_level);
-    _logger_ch_scrn.setFormatter(_logger_formatter_scrn);
-
-    logger = logging.getLogger("dynascii").getChild("main");
-    logger.addHandler(_logger_ch_scrn);
-
-
+    logger_ch_stream.setLevel(args.log_level);
 
     logger.info(
         'Parametered with \n' +
