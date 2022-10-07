@@ -2,15 +2,7 @@
 import threading;
 import logging;
 
-_logger_formatter_scrn = logging.Formatter(fmt='\033[0m%(asctime)s \033[1;34m[%(levelname)s]\033[0;33m >> \033[0;31m[%(threadName)s]\033[0;33m >> \033[0m%(message)s', datefmt='%H:%M');
-_logger_ch_scrn = logging.StreamHandler();
-_logger_ch_scrn.setLevel(logging.INFO);
-_logger_ch_scrn.setFormatter(_logger_formatter_scrn);
-
-logger = logging.getLogger("dynascii").getChild("pool");
-logger.addHandler(_logger_ch_scrn);
-
-
+logger = logging.getLogger("dynascii").getChild(__name__);
 
 def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str = "nullshell", *args, **kwargs):
 
