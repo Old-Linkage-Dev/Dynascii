@@ -13,7 +13,7 @@ logger.addHandler(_logger_ch_scrn);
 
 def Shell(*args, **kwargs):
     
-    def run(conn) -> None:
+    def run(conn, addr) -> None:
         logger.info("Running null shell...");
         conn.close();
 
