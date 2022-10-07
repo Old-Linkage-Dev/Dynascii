@@ -18,7 +18,7 @@ logger.addHandler(_logger_ch_scrn);
 
 def Shell(pipeshell : str, *args, **kwargs):
 
-    def run(conn) -> None:
+    def run(conn, addr) -> None:
         logger.info('Running pipe shell...');
         try:
             _proc = subprocess.Popen(
