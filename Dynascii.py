@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args(args_dynascii);
 
-    _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
+    _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
     _logger_ch_file = logging.FileHandler(args.log_file, encoding = 'utf8') if args.log_file else None;
     _logger_ch_file.setLevel(logging.DEBUG);
     _logger_ch_file.setFormatter(_logger_formatter_file);
