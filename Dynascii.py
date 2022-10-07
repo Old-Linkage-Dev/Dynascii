@@ -122,7 +122,10 @@ if __name__ == "__main__":
     );
     server.bind((args.host, args.port));
     server.listen(args.backlogs);
-    server.setblocking(True);
+    if args.blocking_io:
+        server.setblocking(True);
+        if args.blocking_timeout > 0:
+            server.settimeout(args.blocking_timeout);
     pool = [];
 
     logger.info("Creating thread pool ...");
@@ -142,6 +145,10 @@ if __name__ == "__main__":
                     logger.debug('%s calling a shell.' % thread.name);
                     args.shell(conn, addr);
                 except BlockingIOError:
+                    if args.no_blocking_delay > 0:
+                        time.sleep(args.no_blocking_delay);
+                    continue;
+                except TimeoutError:
                     continue;
                 except Exception as err:
                     logger.error(err);
@@ -175,7 +182,7 @@ if __name__ == "__main__":
             if pool[poolid].is_alive():
                 logger.debug("Terminating PoolThread#%d ..." % poolid);
                 pool[poolid].running = False;
-        if not server.getblocking():
+        if not args.blocking_io or args.blocking_timeout > 0:
             for poolid in range(args.pool_size):
                 if pool[poolid].is_alive():
                     logger.debug("Waiting PoolThread#%d ..." % poolid);
