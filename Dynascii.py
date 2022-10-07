@@ -85,6 +85,7 @@ if __name__ == "__main__":
     parser.add_argument("--host",               dest = "host", type = str, default = "",                                help = "str : hostname of server");
     parser.add_argument("--port",               dest = "port", type = uint16, default = 23,                             help = "uint16 : port of server");
     parser.add_argument("--blocking-io",        dest = "blocking_io", action = "store_true", default = False,           help = "bool : use of blocking IO");
+    parser.add_argument("--no-blocking-io",     dest = "blocking_io", action = "store_false", default = False,          help = "bool : use of blocking IO, flagged for not using");
     parser.add_argument("--blocking-timeout",   dest = "blocking_timeout", type = uint, default = 3,                    help = "uint : time of blocking IO timeout, 0 for no timeout");
     parser.add_argument("--no-blocking-delay",  dest = "no_blocking_delay", type = uint, default = 1,                   help = "uint : time of non-blocking IO inter-polling delay");
     parser.add_argument("--backlogs",           dest = "backlogs", type = uint, default = 16,                           help = "uint : backlogs of server");
@@ -107,6 +108,7 @@ if __name__ == "__main__":
         '  - LOG_FILE        = %s\n' % args.log_file +
         '  - HOST            = %s\n' % args.host +
         '  - PORT            = %d\n' % args.port +
+        '  - BLOCKING-IO     = %s\n' % args.blocking_io +
         '  - BACKLOG         = %d\n' % args.backlogs +
         '  - POOL_SIZE       = %d\n' % args.pool_size +
         '  - SHELL           = %s\n' % args.shell +
