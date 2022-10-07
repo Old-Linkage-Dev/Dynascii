@@ -138,11 +138,11 @@ if __name__ == "__main__":
             self.name = 'PoolThread#%d(%s)' % (self.poolid, hex(id(self)));
             self.daemon = True;
         def run(self):
-            logger.debug('%s started.' % thread.name);
+            logger.info('%s started.' % self.name);
             while self.running:
                 try:
                     conn, addr = server.accept();
-                    logger.debug('%s calling a shell.' % thread.name);
+                    logger.debug('%s calling a shell.' % self.name);
                     args.shell(conn, addr);
                 except BlockingIOError:
                     if args.no_blocking_delay > 0:
@@ -153,8 +153,9 @@ if __name__ == "__main__":
                 except Exception as err:
                     logger.error(err);
                     logger.debug(traceback.format_exc());
-                    logger.critical('%s run into an exception.' % thread.name);
+                    logger.critical('%s run into an exception.' % self.name);
                     break;
+            logger.info('%s ended.' % self.name);
 
     logger.info('Starting tasks...');
 
