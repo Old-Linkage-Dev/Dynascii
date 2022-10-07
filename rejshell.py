@@ -13,7 +13,7 @@ logger.addHandler(_logger_ch_scrn);
 
 def Shell(*args, **kwargs):
 
-    def run(conn) -> None:
+    def run(conn, addr) -> None:
         logger.info("Rejecting...");
         conn.send(b'\x1Bc\x1B[H');
         conn.send("非常抱歉，想来玩的人太多了，您可能要等一等了。\r\n".encode("utf8"));
