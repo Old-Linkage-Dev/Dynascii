@@ -20,7 +20,7 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
 
     interval = float(interval);
 
-    def run(conn) -> None:
+    def run(conn, addr) -> None:
         logger.info('Running text frame shell...');
         try:
             with open(txtframefile, mode = 'r') as _fp:
