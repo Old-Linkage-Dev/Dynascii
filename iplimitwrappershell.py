@@ -16,6 +16,7 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
 
     ip_pool = {};
     ip_pool_lock = threading.Lock();
+    iplimit = int(iplimit);
     shell_accept = __import__(shell_accept).Shell(**kwargs);
     shell_reject = __import__(shell_reject).Shell(**kwargs);
 
