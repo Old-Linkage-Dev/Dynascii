@@ -79,14 +79,17 @@ if __name__ == "__main__":
             raise ValueError();
 
     parser = argparse.ArgumentParser(description = open("./README.md", 'r').read());
-    parser.add_argument("--log",        dest = "log_file", type = str, default = None,                          help = "str : path to log file");
-    parser.add_argument("--log-level",  dest = "log_level", type = _LoggerLevel, default = logging.INFO,        help = "str : name of logging level");
-    parser.add_argument("-6",           dest = "use_v6", action = "store_true", default = False,                help = "flag : use of IPv6");
-    parser.add_argument("--host",       dest = "host", type = str, default = "",                                help = "str : hostname of server");
-    parser.add_argument("--port",       dest = "port", type = uint16, default = 23,                             help = "uint16 : port of server");
-    parser.add_argument("--backlogs",   dest = "backlogs", type = uint, default = 16,                           help = "uint : backlogs of server");
-    parser.add_argument("--poolsize",   dest = "pool_size", type = uint, default = 32,                          help = "uint : size of server thread pool");
-    parser.add_argument("--shell",      dest = "shell", type = _Shell, default = "nullshell",                   help = "module : name of shell module");
+    parser.add_argument("--log",                dest = "log_file", type = str, default = None,                          help = "str : path to log file");
+    parser.add_argument("--log-level",          dest = "log_level", type = _LoggerLevel, default = logging.INFO,        help = "str : name of logging level");
+    parser.add_argument("-6",                   dest = "use_v6", action = "store_true", default = False,                help = "flag : use of IPv6");
+    parser.add_argument("--host",               dest = "host", type = str, default = "",                                help = "str : hostname of server");
+    parser.add_argument("--port",               dest = "port", type = uint16, default = 23,                             help = "uint16 : port of server");
+    parser.add_argument("--blocking-io",        dest = "blocking_io", action = "store_true", default = False,           help = "bool : use of blocking IO");
+    parser.add_argument("--blocking-timeout",   dest = "blocking_timeout", type = uint, default = 3,                    help = "uint : time of blocking IO timeout, 0 for no timeout");
+    parser.add_argument("--no-blocking-delay",  dest = "no_blocking_delay", type = uint, default = 1,                   help = "uint : time of non-blocking IO inter-polling delay");
+    parser.add_argument("--backlogs",           dest = "backlogs", type = uint, default = 16,                           help = "uint : backlogs of server");
+    parser.add_argument("--poolsize",           dest = "pool_size", type = uint, default = 32,                          help = "uint : size of server thread pool");
+    parser.add_argument("--shell",              dest = "shell", type = _Shell, default = "nullshell",                   help = "module : name of shell module");
 
     args = parser.parse_args(args_dynascii);
 
