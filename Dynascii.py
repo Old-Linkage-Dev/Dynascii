@@ -122,8 +122,8 @@ if __name__ == "__main__":
     );
     server.bind((args.host, args.port));
     server.listen(args.backlogs);
+    server.setblocking(args.blocking_io);
     if args.blocking_io:
-        server.setblocking(True);
         if args.blocking_timeout > 0:
             server.settimeout(args.blocking_timeout);
     pool = [];
