@@ -33,7 +33,7 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
                         _sends += line[:-1].encode('utf8') + b'\r\n';
                 logger.info('Frame play ended.');
             conn.shutdown(socket.SHUT_RDWR);
-            time.sleep(2);
+            conn.close();
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             conn.close();
             logger.info('User connection aborted.');
