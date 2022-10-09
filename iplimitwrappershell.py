@@ -22,7 +22,7 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
             else:
                 ip_pool[ip] = 1;
             n = ip_pool[ip];
-        logger.debug('IP %s requesting %d links.' % (addr[0], n));
+        logger.debug('IP %s simultaneously link %d.' % (addr[0], n));
         if (n <= iplimit):
             logger.info('User new @%s:%d.' % addr[:2]);
             shell_accept(conn, addr);
