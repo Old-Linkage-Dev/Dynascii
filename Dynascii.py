@@ -18,7 +18,6 @@ def formatMessage(record: logging.LogRecord) -> str:
         return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;31m[{record.threadName}]\033[0;33m >> \033[0;33m[{record.module}]\033[0;33m >> \033[0m{record.message}';
 
 logger = logging.getLogger("dynascii");
-logger.setLevel(logging.DEBUG);
 logger_formatter_stream = logging.Formatter(fmt='\033[0m%(asctime)s \033[1;34m[%(levelname)s]\033[0;33m >> \033[0;35m[%(threadName)s]\033[0;33m >> \033[0m%(message)s', datefmt='%H:%M');
 logger_formatter_stream.datefmt = '%H:%M';
 logger_formatter_stream.formatMessage = formatMessage;
