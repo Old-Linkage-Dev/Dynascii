@@ -35,4 +35,8 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
                 if ip_pool[ip] == 0:
                     ip_pool.pop(ip);
 
+    for arg in args:
+        logger.warning('Unrecognized arg : %s' % arg);
+    for key in kwargs:
+        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
     return run;
