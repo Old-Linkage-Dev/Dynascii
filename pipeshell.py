@@ -36,6 +36,7 @@ def Shell(pipeshell : str, *args, **kwargs):
                 _chrs = _pipe.read(1);
                 conn.send(_chrs);
             conn.shutdown(socket.SHUT_RDWR);
+            conn.close();
             _pipe.close();
             _proc.kill();
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
