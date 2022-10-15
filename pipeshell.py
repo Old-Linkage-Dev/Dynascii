@@ -42,7 +42,7 @@ def Shell(pipeshell : str, *args, **kwargs):
                 _chrs = _pipe.read(1);
                 _len += 1;
                 conn.send(_chrs);
-                if (_len % 1024 * 4):
+                if (_len % (1024 * 10) == 0):
                     logger.info("Sended piped output of %d k bytes." % (_len // 1024));
             logger.info("Sending piped output done.");
             logger.debug("Closing output...");
