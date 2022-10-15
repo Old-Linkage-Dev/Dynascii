@@ -34,7 +34,7 @@ def Shell(pipeshell : str, *args, **kwargs):
             logger.critical('Shell start failed.');
             return;
         try:
-            logger.debug("Sending piped output...");
+            logger.info("Sending piped output...");
             _len = 0;
             _chrs = b'\x00';
             #self.conn.send(b'\033[0;33m');
@@ -43,8 +43,8 @@ def Shell(pipeshell : str, *args, **kwargs):
                 _len += 1;
                 conn.send(_chrs);
                 if (_len % 1024 * 4):
-                    logger.debug("Sended piped output of %d k bytes." % (_len // 1024));
-            logger.debug("Sending piped output done.");
+                    logger.info("Sended piped output of %d k bytes." % (_len // 1024));
+            logger.info("Sending piped output done.");
             logger.debug("Closing piped output...");
             conn.shutdown(socket.SHUT_RDWR);
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
