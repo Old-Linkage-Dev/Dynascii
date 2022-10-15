@@ -71,8 +71,10 @@ if __name__ == "__main__":
 
     def _LoggerLevel(level : str):
         try:
-            _level = logging._nameToLevel[level];
-            logger_ch_stream.setLevel(args.log_level);
+            _level = getattr(logging, level.upper(), None);
+            if not isinstance(_level, int):
+                raise ValueError('Invalid log level: %s' % level);
+            logger_ch_stream.setLevel(_level);
             return _level;
         except:
             raise ValueError();
