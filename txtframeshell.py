@@ -40,9 +40,9 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
             logger.debug(traceback.format_exc());
             logger.critical('Shell failed.');
         finally:
-            logger.debug("Closing frames...");
+            logger.debug("Closing connection...");
             conn.close();
-            logger.debug("Closed frames.");
+            logger.debug("Closed connection.");
 
         logger.info('User ended.');
         return;
