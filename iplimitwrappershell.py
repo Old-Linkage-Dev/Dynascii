@@ -6,9 +6,11 @@ logger = logging.getLogger("dynascii").getChild(__name__);
 
 def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str = "nullshell", *args, **kwargs):
 
+    logger.debug("Initing IP Limit Wrapper Shell...");
     ip_pool = {};
     ip_pool_lock = threading.Lock();
     iplimit = int(iplimit);
+    logger.debug("Importing accept shell and reject shell for IP Limit Wrapper Shell...");
     shell_accept = __import__(shell_accept).Shell(**kwargs);
     shell_reject = __import__(shell_reject).Shell(**kwargs);
 
@@ -43,4 +45,5 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
         logger.warning('Unrecognized arg : %s' % arg);
     for key in kwargs:
         logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+    logger.debug("Inited IP Limit Wrapper Shell.");
     return run;
