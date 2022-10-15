@@ -71,7 +71,9 @@ if __name__ == "__main__":
 
     def _LoggerLevel(level : str):
         try:
-            return logging._nameToLevel[level];
+            _level = logging._nameToLevel[level];
+            logger_ch_stream.setLevel(args.log_level);
+            return _level;
         except:
             raise ValueError();
 
@@ -104,8 +106,6 @@ if __name__ == "__main__":
     parser.add_argument("--shell",              dest = "shell", type = _Shell, default = "nullshell",                   help = "module : name of shell module");
 
     args = parser.parse_args(args_dynascii);
-
-    logger_ch_stream.setLevel(args.log_level);
 
     logger.info(
         'Parametered with \n' +
