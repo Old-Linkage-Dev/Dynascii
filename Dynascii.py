@@ -58,6 +58,17 @@ if __name__ == "__main__":
         except:
             raise argparse.ArgumentError(message = "Fail to load shell indicated, check shell name and shell args.");
     
+    def _LoggerFile(file : str):
+        try:
+            _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
+            _logger_ch_file = logging.handlers.TimedRotatingFileHandler(file, when = 'D', interval = 60, backupCount = 12, encoding = 'utf8');
+            _logger_ch_file.setLevel(logging.DEBUG);
+            _logger_ch_file.setFormatter(_logger_formatter_file);
+            logger.addHandler(_logger_ch_file);
+            return logger;
+        except:
+            raise argparse.ArgumentError(message = "Fail to create file logging.");
+
     def _LoggerLevel(level : str):
         try:
             return logging._nameToLevel[level];
@@ -79,7 +90,7 @@ if __name__ == "__main__":
             raise ValueError();
 
     parser = argparse.ArgumentParser(description = open("./README.md", 'r').read());
-    parser.add_argument("--log",                dest = "log_file", type = str, default = None,                          help = "str : path to log file");
+    parser.add_argument("--log",                dest = "log_file", type = _LoggerFile, default = None,                  help = "str : path to log file");
     parser.add_argument("--log-level",          dest = "log_level", type = _LoggerLevel, default = logging.INFO,        help = "str : name of logging level");
     parser.add_argument("-6",                   dest = "use_v6", action = "store_true", default = False,                help = "flag : use of IPv6");
     parser.add_argument("--host",               dest = "host", type = str, default = "",                                help = "str : hostname of server");
@@ -93,13 +104,6 @@ if __name__ == "__main__":
     parser.add_argument("--shell",              dest = "shell", type = _Shell, default = "nullshell",                   help = "module : name of shell module");
 
     args = parser.parse_args(args_dynascii);
-
-    if args.log_file:
-        _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
-        _logger_ch_file = logging.handlers.TimedRotatingFileHandler(args.log_file, when = 'D', interval = 60, backupCount = 12, encoding = 'utf8');
-        _logger_ch_file.setLevel(logging.DEBUG);
-        _logger_ch_file.setFormatter(_logger_formatter_file);
-        logger.addHandler(_logger_ch_file);
 
     logger_ch_stream.setLevel(args.log_level);
 
