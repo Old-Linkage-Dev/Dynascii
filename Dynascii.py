@@ -24,6 +24,7 @@ logger_formatter_stream.datefmt = '%H:%M';
 logger_formatter_stream.formatMessage = formatMessage;
 logger_ch_stream = logging.StreamHandler();
 logger_ch_stream.setFormatter(logger_formatter_stream);
+logger.setLevel(logging.DEBUG);
 logger.addHandler(logger_ch_stream);
 
 
@@ -62,7 +63,7 @@ if __name__ == "__main__":
         try:
             _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
             _logger_ch_file = logging.handlers.TimedRotatingFileHandler(file, when = 'D', interval = 60, backupCount = 12, encoding = 'utf8');
-            _logger_ch_file.setLevel(logging.DEBUG);
+            _logger_ch_file.setLevel(logging.WARN);
             _logger_ch_file.setFormatter(_logger_formatter_file);
             logger.addHandler(_logger_ch_file);
             return logger;
