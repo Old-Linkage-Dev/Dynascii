@@ -19,7 +19,7 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
                 _sends = b'\x1Bc\x1B[H';
                 _t = time.time();
                 _f = 0;
-                logger.debug('Frame play to start.');
+                logger.info('Frame play to start.');
                 for line in _fp.readlines():
                     if line == '$FRAME_END$\n':
                         _f += 1;
@@ -28,7 +28,7 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
                         conn.send(_sends);
                         _sends = b'\x1Bc\x1B[H';
                         if _f % 200 == 0:
-                            logger.debug('Frame play #%d' % _f);
+                            logger.info('Frame play #%d' % _f);
                     else:
                         _sends += line[:-1].encode('utf8') + b'\r\n';
                 logger.info('Frame play ended.');
