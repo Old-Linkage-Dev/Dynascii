@@ -11,12 +11,36 @@ import logging.handlers;
 import traceback;
 
 def formatMessage(record: logging.LogRecord) -> str:
-    if record.threadName == 'MainThread':
-        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;35m[{record.module}]\033[0;33m >> \033[0m{record.message}';
-    elif record.module == 'Dynascii':
-        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;31m[{record.threadName}]\033[0;33m >> \033[0m{record.message}';
+    _rstc = "\033[0m";
+    _mtc = "\033[0;35m";
+    _ptc = "\033[0;31m";
+    _modc = "\033[0;33m";
+    _fw = "\033[0;33m >> ";
+    if record.levelno >= logging.CRITICAL:
+        _lc = "\033[1;31m";
+        _mc = "\033[0;31m";
+    elif record.levelno >= logging.WARNING:
+        _lc = "\033[1;33m";
+        _mc = "\033[0;33m";
+    elif record.levelno >= logging.INFO:
+        _lc = "\033[1;34m";
+        _mc = "\033[0m";
+    elif record.levelno >= logging.DEBUG:
+        _lc = "\033[1;30m";
+        _mc = "\033[0m";
     else:
-        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;31m[{record.threadName}]\033[0;33m >> \033[0;33m[{record.module}]\033[0;33m >> \033[0m{record.message}';
+        _mtc = "\033[1;30m";
+        _ptc = "\033[1;30m";
+        _modc = "\033[1;30m";
+        _fw = "\033[1;30m >> ";
+        _lc = "\033[1;30m";
+        _mc = "\033[1;30m";
+    if record.threadName == 'MainThread':
+        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[{record.module}]{_fw}{_mc}{record.message}';
+    elif record.module == 'Dynascii':
+        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_mc}{record.message}';
+    else:
+        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_modc}[{record.module}]{_fw}{_mc}{record.message}';
 
 logger = logging.getLogger("dynascii");
 logger_formatter_stream = logging.Formatter(fmt='\033[0m%(asctime)s \033[1;34m[%(levelname)s]\033[0;33m >> \033[0;35m[%(threadName)s]\033[0;33m >> \033[0m%(message)s', datefmt='%H:%M');
