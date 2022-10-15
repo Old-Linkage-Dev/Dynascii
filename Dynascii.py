@@ -135,10 +135,12 @@ if __name__ == "__main__":
     class PoolThread(threading.Thread):
         def __init__(self, poolid):
             super().__init__();
+            logger.debug('Initing a thread of pool id %d ...' % poolid);
             self.running = True;
             self.poolid = poolid;
             self.name = 'PoolThread#%d' % self.poolid;
             self.daemon = True;
+            logger.debug('Inited a thread of pool id %d .' % poolid);
         def run(self):
             logger.info('%s started.' % self.name);
             while self.running:
