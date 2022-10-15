@@ -66,7 +66,7 @@ if __name__ == "__main__":
             _logger_ch_file.setLevel(logging.WARN);
             _logger_ch_file.setFormatter(_logger_formatter_file);
             logger.addHandler(_logger_ch_file);
-            return logger;
+            return file;
         except:
             raise argparse.ArgumentError(message = "Fail to create file logging.");
 
