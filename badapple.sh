@@ -1,7 +1,7 @@
-PSD=$(pwd)"/"$(dirname $0)
+cd $(pwd)"/"$(dirname $0)
 while :; do
-python3 $PSD/Dynascii.py \
-    --log '$PSD/dynascii_badapple.log' \
+python3 ./Dynascii.py \
+    --log './dynascii_badapple.log' \
     --log-level INFO \
     --host 127.0.0.1 \
     --port 6024 \
@@ -14,7 +14,7 @@ python3 $PSD/Dynascii.py \
     --  --iplimit 8 \
         --shell_reject 'rejshell' \
         --shell_accept 'txtframeshell' \
-            --txtframefile '$PSD/res/badapple.txt' \
+            --txtframefile './res/badapple.txt' \
             --interval 0.125
 sleep 60
 done
