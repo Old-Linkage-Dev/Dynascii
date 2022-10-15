@@ -1,6 +1,7 @@
+PSD=$(pwd)"/"$(dirname $0)
 while :; do
-python3 ./Dynascii.py \
-    --log './dynascii_stillalive.log' \
+python3 $PSD/Dynascii.py \
+    --log '$PSD/dynascii_stillalive.log' \
     --log-level INFO \
     --host 127.0.0.1 \
     --port 6023 \
@@ -13,6 +14,6 @@ python3 ./Dynascii.py \
     --  --iplimit 8 \
         --shell_reject 'rejshell' \
         --shell_accept 'pipeshell' \
-            --pipeshell 'python3 ./res/still_alive_credit_fortelnet.py'
+            --pipeshell 'python3 $PSD/res/still_alive_credit_fortelnet.py'
 sleep 60
 done
