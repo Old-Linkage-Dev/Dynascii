@@ -13,7 +13,7 @@ import traceback;
 def formatMessage(record: logging.LogRecord) -> str:
     _rstc = "\033[0m";
     _mtc = "\033[0;35m";
-    _ptc = "\033[0;31m";
+    _ptc = "\033[0;32m";
     _modc = "\033[0;33m";
     _fw = "\033[0;33m >> ";
     if record.levelno >= logging.CRITICAL:
