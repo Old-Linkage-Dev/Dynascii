@@ -63,7 +63,7 @@ if __name__ == "__main__":
         try:
             _logger_formatter_file = logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%Y-%m-%d-%H:%M:%S');
             _logger_ch_file = logging.handlers.TimedRotatingFileHandler(file, when = 'D', interval = 60, backupCount = 12, encoding = 'utf8');
-            _logger_ch_file.setLevel(logging.WARN);
+            _logger_ch_file.setLevel(logging.DEBUG);
             _logger_ch_file.setFormatter(_logger_formatter_file);
             logger.addHandler(_logger_ch_file);
             return file;
