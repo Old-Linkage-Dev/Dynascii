@@ -36,21 +36,18 @@ def Shell(pipeshell : str, *args, **kwargs):
                 _chrs = _pipe.read(1);
                 conn.send(_chrs);
             conn.shutdown(socket.SHUT_RDWR);
-            conn.close();
-            _pipe.close();
-            _proc.kill();
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
-            conn.close();
-            _pipe.close();
-            _proc.kill();
             logger.info('User connection aborted.');
         except Exception as err:
-            conn.close();
-            _pipe.close();
-            _proc.kill();
             logger.error(err);
             logger.debug(traceback.format_exc());
             logger.critical('Shell failed.');
+        finally:
+            logger.debug("Closing pipe...");
+            conn.close();
+            _pipe.close();
+            _proc.kill();
+            logger.debug("Closed pipe.");
         logger.info('User ended.');
         return;
 
