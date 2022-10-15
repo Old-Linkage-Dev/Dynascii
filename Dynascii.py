@@ -56,7 +56,7 @@ if __name__ == "__main__":
         try:
             return __import__(module).Shell(**kwargs_shell);
         except:
-            raise argparse.ArgumentError(message = "Fail to load shell indicated, check shell name and shell args");
+            raise argparse.ArgumentError(message = "Fail to load shell indicated, check shell name and shell args.");
     
     def _LoggerLevel(level : str):
         try:
