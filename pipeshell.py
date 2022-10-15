@@ -45,7 +45,7 @@ def Shell(pipeshell : str, *args, **kwargs):
                 if (_len % 1024 * 4):
                     logger.info("Sended piped output of %d k bytes." % (_len // 1024));
             logger.info("Sending piped output done.");
-            logger.debug("Closing piped output...");
+            logger.debug("Closing output...");
             conn.shutdown(socket.SHUT_RDWR);
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             logger.info('User connection aborted.');
@@ -54,11 +54,11 @@ def Shell(pipeshell : str, *args, **kwargs):
             logger.debug(traceback.format_exc());
             logger.critical('Shell failed.');
         finally:
-            logger.debug("Closing pipe...");
+            logger.debug("Closing connection and piped shell...");
             conn.close();
             _pipe.close();
             _proc.kill();
-            logger.debug("Closed pipe.");
+            logger.debug("Closed connection and piped shell.");
         logger.info('User ended.');
         return;
 
