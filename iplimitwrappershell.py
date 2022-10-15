@@ -42,8 +42,8 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
                     ip_pool.pop(ip);
 
     for arg in args:
-        logger.warning('Unrecognized arg : %s' % arg);
+        logger.debug('Unrecognized arg : %s' % arg);
     for key in kwargs:
-        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+        logger.debug("Unrecognized arg : %s : %s" % (key, kwargs[key]));
     logger.debug("Inited IP Limit Wrapper Shell.");
     return run;
