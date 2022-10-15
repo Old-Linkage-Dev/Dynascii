@@ -47,6 +47,7 @@ def Shell(pipeshell : str, *args, **kwargs):
             logger.info("Sending piped output done.");
             logger.debug("Closing output...");
             conn.shutdown(socket.SHUT_RDWR);
+            logger.debug("Closed output.");
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             logger.info('User connection aborted.');
         except Exception as err:
