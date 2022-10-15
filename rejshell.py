@@ -3,13 +3,18 @@ import logging;
 
 logger = logging.getLogger("dynascii").getChild(__name__);
 
-def Shell(*args, **kwargs):
+def Shell(line = None, *args, **kwargs):
 
+    lines = [line] if line else [
+        "非常抱歉，想来玩的人太多了，您可能要等一等了。",
+        "It is of my most sorrow that there are too many visit. It may require a wait for it to be available.",
+    ];
     def run(conn, addr) -> None:
         logger.info("Rejecting...");
         conn.send(b'\x1Bc\x1B[H');
-        conn.send("非常抱歉，想来玩的人太多了，您可能要等一等了。\r\n".encode("utf8"));
-        conn.send("It is of my most sorrow that there are too many visit. It may require a wait for it to be available.\r\n".encode("utf8"));
+        for line in lines:
+            logger.info("Sending: %s" % line);
+            conn.send((line+"\n\r").encode("utf8"));
         ##conn.send("It is of my most sorrow that there are too many visit. It may require a wait for it to be available.\n".encode("utf8"));
         conn.close();
 
