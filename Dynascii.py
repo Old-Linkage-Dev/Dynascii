@@ -12,7 +12,7 @@ import traceback;
 
 def formatMessage(record: logging.LogRecord) -> str:
     if record.threadName == 'MainThread':
-        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;35m[Main]\033[0;33m >> \033[0m{record.message}';
+        return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;35m[{record.module}]\033[0;33m >> \033[0m{record.message}';
     elif record.module == 'Dynascii':
         return f'\033[0m{record.asctime} \033[1;34m{record.levelname:<10}\033[0;33m >> \033[0;31m[{record.threadName}]\033[0;33m >> \033[0m{record.message}';
     else:
