@@ -772,6 +772,7 @@ class thread_credits (threading.Thread):
 
 
 ################# Main ################
+print('\033[0;33m');
 clear()
 drawFrame()
 move(2, 2)
