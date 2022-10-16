@@ -182,7 +182,7 @@ if __name__ == "__main__":
                     if args.no_blocking_delay > 0:
                         time.sleep(args.no_blocking_delay);
                     continue;
-                except TimeoutError:
+                except (TimeoutError, socket.timeout):
                     continue;
                 except Exception as err:
                     logger.error(err);
