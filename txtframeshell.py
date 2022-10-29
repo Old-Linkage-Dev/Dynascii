@@ -11,27 +11,39 @@ logger = logging.getLogger("dynascii").getChild(__name__);
 def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
 
     interval = float(interval);
+    try:
+        with open(txtframefile, mode = 'r') as _fp:
+            lines = _fp.readlines();
+    except Exception as err:
+        logger.error(err);
+        logger.debug(traceback.format_exc());
+        logger.critical('Shell init failed.');
+        return lambda conn, addr: (
+            logger.info('No frame to play.'),
+            logger.debug("Closing connection..."),
+            conn.close(),
+            logger.debug("Closed connection.")
+        );
 
     def run(conn, addr) -> None:
         logger.info('Running text frame shell...');
         try:
-            with open(txtframefile, mode = 'r') as _fp:
-                _sends = b'\x1Bc\x1B[H';
-                _t = time.time();
-                _f = 0;
-                logger.info('Frame play to start.');
-                for line in _fp.readlines():
-                    if line == '$FRAME_END$\n':
-                        _f += 1;
-                        while time.time() - _t < _f * interval:
-                            time.sleep(0.01);
-                        conn.send(_sends);
-                        _sends = b'\x1Bc\x1B[H';
-                        if _f % 200 == 0:
-                            logger.info('Frame play #%d' % _f);
-                    else:
-                        _sends += line[:-1].encode('utf8') + b'\r\n';
-                logger.info('Frame play ended.');
+            _sends = b'\x1Bc\x1B[H';
+            _t = time.time();
+            _f = 0;
+            logger.info('Frame play to start.');
+            for line in lines:
+                if line == '$FRAME_END$\n':
+                    _f += 1;
+                    while time.time() - _t < _f * interval:
+                        time.sleep(0.01);
+                    conn.send(_sends);
+                    _sends = b'\x1Bc\x1B[H';
+                    if _f % 200 == 0:
+                        logger.info('Frame play #%d' % _f);
+                else:
+                    _sends += line[:-1].encode('utf8') + b'\r\n';
+            logger.info('Frame play ended.');
             logger.debug("Closing output...");
             conn.shutdown(socket.SHUT_RDWR);
             logger.debug("Closed output.");
