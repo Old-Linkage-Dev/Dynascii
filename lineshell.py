@@ -14,8 +14,8 @@ def Shell(lines = [], *args, **kwargs):
             conn.send((line+"\n\r").encode("utf8"));
 
     for arg in args:
-        logger.debug('Unrecognized arg : %s' % arg);
+        logger.warning('Unrecognized arg : %s' % arg);
     for key in kwargs:
-        logger.debug("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
     logger.debug("Inited Line Shell.");
     return run;
