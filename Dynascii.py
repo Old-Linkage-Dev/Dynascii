@@ -65,9 +65,11 @@ if __name__ == "__main__":
 
     logger.info("Creating server ...");
 
+    server_args = (socket.SOCK_STREAM,); # Considering socket.SO_REUSEADDR, socket.SO_REUSEPORT
     server = (
-        socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        if not args.use_v6 else socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+        socket.socket(socket.AF_INET, *server_args)
+        if not args.use_v6
+        else socket.socket(socket.AF_INET6, *server_args)
     );
     server.bind((args.host, args.port));
     server.listen(args.backlogs);
