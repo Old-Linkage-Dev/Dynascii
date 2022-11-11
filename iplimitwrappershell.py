@@ -28,7 +28,6 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
         if (n <= iplimit):
             logger.info('User new @%s:%d.' % addr[:2]);
             shell_accept(conn, addr);
-            conn.close();
             logger.info('User ended @%s:%d.' % addr[:2]);
         else:
             logger.info('Request flood in @%s:%d.' % addr[:2]);
