@@ -8,7 +8,6 @@ def Shell(*args, **kwargs):
     logger.debug("Initing Null Shell...");
     def run(conn, addr) -> None:
         logger.info("Running null shell...");
-        conn.close();
 
     for arg in args:
         logger.warning('Unrecognized arg : %s' % arg);
