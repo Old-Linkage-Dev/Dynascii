@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import time;
-import socket;
 import logging;
 import traceback;
 
@@ -39,9 +38,6 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
                 else:
                     _sends += line[:-1].encode('utf8') + b'\r\n';
             logger.info('Frame play ended.');
-            logger.debug("Closing output...");
-            conn.shutdown(socket.SHUT_RDWR);
-            logger.debug("Closed output.");
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             logger.info('User connection aborted.');
         except Exception as err:
