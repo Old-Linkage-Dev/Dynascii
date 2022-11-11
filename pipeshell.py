@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 
-import socket;
 import subprocess;
 import logging;
 import traceback;
@@ -44,9 +43,6 @@ def Shell(pipeshell : str, *args, **kwargs):
                 if (_len % (1024 * 10) == 0):
                     logger.info("Sended piped output of %d k bytes." % (_len // 1024));
             logger.info("Sending piped output done.");
-            logger.debug("Closing output...");
-            conn.shutdown(socket.SHUT_RDWR);
-            logger.debug("Closed output.");
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
             logger.info('User connection aborted.');
         except Exception as err:
