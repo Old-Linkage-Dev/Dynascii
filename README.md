@@ -21,3 +21,5 @@ These implementations may cause some difficulty to read the code and to debug. B
 ## How to use?
 
 Run the _badapple.sh_ or _stillalive.sh_ to start a server, where all configs can be found and modified.
+
+Use _./Dynascii.py --help_ for help.
