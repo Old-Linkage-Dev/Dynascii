@@ -35,7 +35,6 @@ def Shell(pipeshell : str, *args, **kwargs):
             logger.info("Sending piped output...");
             _len = 0;
             _chrs = b'\x00';
-            #self.conn.send(b'\033[0;33m');
             while _proc.poll() == None and _chrs != b'':
                 _chrs = _pipe.read(1);
                 _len += 1;
