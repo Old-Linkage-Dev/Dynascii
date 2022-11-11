@@ -10,6 +10,35 @@ from _logging import logger;
 from _args import kwargs_shell;
 from _args import args;
 
+class _PoolThread(threading.Thread):
+    def __init__(self, poolid):
+        super().__init__();
+        logger.debug('Initing a thread of pool id %d ...' % poolid);
+        self.running = True;
+        self.poolid = poolid;
+        self.name = 'PoolThread#%d' % self.poolid;
+        self.daemon = True;
+        logger.debug('Inited a thread of pool id %d .' % poolid);
+    def run(self):
+        logger.info('%s started.' % self.name);
+        while self.running:
+            try:
+                conn, addr = server.accept();
+                logger.debug('%s calling a shell.' % self.name);
+            except BlockingIOError:
+                if args.no_blocking_delay > 0:
+                    time.sleep(args.no_blocking_delay);
+                continue;
+            except (TimeoutError, socket.timeout):
+                continue;
+            except Exception as err:
+                logger.error(err);
+                logger.debug(traceback.format_exc());
+                logger.critical('%s run into an exception.' % self.name);
+                break;
+            args.shell(conn, addr);
+        logger.info('%s ended.' % self.name);
+
 if __name__ == "__main__":
 
     logger.info(
@@ -41,39 +70,10 @@ if __name__ == "__main__":
 
     logger.info("Creating thread pool ...");
 
-    class PoolThread(threading.Thread):
-        def __init__(self, poolid):
-            super().__init__();
-            logger.debug('Initing a thread of pool id %d ...' % poolid);
-            self.running = True;
-            self.poolid = poolid;
-            self.name = 'PoolThread#%d' % self.poolid;
-            self.daemon = True;
-            logger.debug('Inited a thread of pool id %d .' % poolid);
-        def run(self):
-            logger.info('%s started.' % self.name);
-            while self.running:
-                try:
-                    conn, addr = server.accept();
-                    logger.debug('%s calling a shell.' % self.name);
-                except BlockingIOError:
-                    if args.no_blocking_delay > 0:
-                        time.sleep(args.no_blocking_delay);
-                    continue;
-                except (TimeoutError, socket.timeout):
-                    continue;
-                except Exception as err:
-                    logger.error(err);
-                    logger.debug(traceback.format_exc());
-                    logger.critical('%s run into an exception.' % self.name);
-                    break;
-                args.shell(conn, addr);
-            logger.info('%s ended.' % self.name);
-
     logger.info('Starting tasks...');
 
     for poolid in range(args.pool_size):
-        thread = PoolThread(poolid = poolid);
+        thread = _PoolThread(poolid = poolid);
         logger.debug("%s starting..." % thread.name);
         pool.append(thread);
         thread.start();
@@ -86,7 +86,7 @@ if __name__ == "__main__":
             for poolid in range(args.pool_size):
                 if not pool[poolid].is_alive():
                     logger.debug("Restarting PoolThread#%d ..." % poolid);
-                    thread = PoolThread(poolid = poolid);
+                    thread = _PoolThread(poolid = poolid);
                     logger.debug("%s starting..." % thread.name);
                     pool[poolid] = thread;
                     thread.start();
