@@ -26,7 +26,6 @@ def Shell(pipeshell : str, *args, **kwargs):
             logger.debug("Opened piped shell process.");
         except Exception as err:
             logger.debug("Opening piped shell process failed.");
-            conn.close();
             _proc = None;
             _pipe = None;
             logger.debug(err);
@@ -55,11 +54,10 @@ def Shell(pipeshell : str, *args, **kwargs):
             logger.debug(traceback.format_exc());
             logger.critical('Shell failed.');
         finally:
-            logger.debug("Closing connection and piped shell...");
-            conn.close();
+            logger.debug("Closing piped shell...");
             _pipe.close();
             _proc.kill();
-            logger.debug("Closed connection and piped shell.");
+            logger.debug("Closed piped shell.");
         logger.info('User ended.');
         return;
 
