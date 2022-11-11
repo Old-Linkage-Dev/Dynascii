@@ -18,12 +18,7 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
         logger.error(err);
         logger.debug(traceback.format_exc());
         logger.critical('Shell init failed.');
-        return lambda conn, addr: (
-            logger.info('No frame to play.'),
-            logger.debug("Closing connection..."),
-            conn.close(),
-            logger.debug("Closed connection.")
-        );
+        return lambda conn, addr : logger.info('No frame to play.');
 
     def run(conn, addr) -> None:
         logger.info('Running text frame shell...');
@@ -53,10 +48,6 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
             logger.error(err);
             logger.debug(traceback.format_exc());
             logger.critical('Shell failed.');
-        finally:
-            logger.debug("Closing connection...");
-            conn.close();
-            logger.debug("Closed connection.");
 
         logger.info('User ended.');
         return;
