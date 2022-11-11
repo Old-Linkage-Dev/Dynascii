@@ -38,7 +38,9 @@ class _PoolThread(threading.Thread):
                 break;
             try:
                 args.shell(conn, addr);
+                logger.debug('%s closing connection.' % self.name);
                 conn.close();
+                logger.debug('%s closed connection.' % self.name);
             except Exception as err:
                 logger.error(err);
                 logger.debug(traceback.format_exc());
