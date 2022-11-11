@@ -5,7 +5,7 @@ logger = logging.getLogger("dynascii").getChild(__name__);
 
 def Shell(lines = [], *args, **kwargs):
 
-    logger.debug("Initing Reject Shell...");
+    logger.debug("Initing Line Shell...");
 
     def run(conn, addr) -> None:
         conn.send(b'\x1Bc\x1B[H');
