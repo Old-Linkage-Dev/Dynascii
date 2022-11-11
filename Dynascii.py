@@ -34,9 +34,16 @@ class _PoolThread(threading.Thread):
             except Exception as err:
                 logger.error(err);
                 logger.debug(traceback.format_exc());
-                logger.critical('%s run into an exception.' % self.name);
+                logger.critical('%s run into an exception listening.' % self.name);
                 break;
-            args.shell(conn, addr);
+            try:
+                args.shell(conn, addr);
+                conn.close();
+            except Exception as err:
+                logger.error(err);
+                logger.debug(traceback.format_exc());
+                logger.critical('%s run into an exception running.' % self.name);
+                break;
         logger.info('%s ended.' % self.name);
 
 if __name__ == "__main__":
