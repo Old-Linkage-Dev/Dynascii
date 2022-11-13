@@ -1,6 +1,6 @@
 
 import logging;
-import lineshell as _ls;
+from .. import lineshell as _ls;
 
 logger = logging.getLogger("dynascii").getChild(__name__);
 

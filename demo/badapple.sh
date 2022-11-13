@@ -10,10 +10,10 @@ python3 ./Dynascii.py \
     --no-blocking-delay 3 \
     --backlogs 4 \
     --poolsize 256 \
-    --shell 'iplimitwrappershell' \
+    --shell 'dynascii.shell.contrib.iplimitwrappershell' \
     --  --iplimit 8 \
-        --shell_reject 'rejshell' \
-        --shell_accept 'txtframeshell' \
+        --shell_reject 'dynascii.shell.contrib.rejshell' \
+        --shell_accept 'dynascii.shell.txtframeshell' \
             --txtframefile './res/badapple.txt' \
             --interval 0.125
 sleep 60

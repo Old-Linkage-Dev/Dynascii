@@ -3,8 +3,8 @@ import argparse                         as _argparse;
 import logging                          as _logging;
 import logging.handlers                 as _logging_handlers;
 import sys                              as _sys;
-from _logging import logger             as _logger;
-from _logging import set_stream_level   as _set_stream_level;
+from ._logging import logger            as _logger;
+from ._logging import set_stream_level  as _set_stream_level;
 
 def _try_default(f, default):
     try:
@@ -14,7 +14,7 @@ def _try_default(f, default):
 
 def _Shell(module : str):
     try:
-        return __import__(module).Shell(**kwargs_shell);
+        return __import__(module, fromlist = ["Shell"]).Shell(**kwargs_shell);
     except:
         raise _argparse.ArgumentError(message = "Fail to load shell indicated, check shell name and shell args.");
 
@@ -63,7 +63,8 @@ else:
     _args_dynascii = _sysargs[ : ];
     _args_shell = [];
 
-_parser = _argparse.ArgumentParser(description = open("./README.md", 'r').read());
+# _parser = _argparse.ArgumentParser(description = open("./README.md", 'r').read());
+_parser = _argparse.ArgumentParser(description = "");
 _parser.add_argument("--log",                dest = "log_file", type = _LoggerFile, default = None,              help = "str : path to log file");
 _parser.add_argument("--log-level",          dest = "log_level", type = _LoggerLevel, default = _logging.INFO,  help = "str : name of logging level");
 _parser.add_argument("-6",                   dest = "use_v6", action = "store_true", default = False,            help = "flag : use of IPv6");

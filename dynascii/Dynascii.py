@@ -6,9 +6,9 @@ import socket;
 import threading;
 import traceback;
 
-from _logging import logger;
-from _args import kwargs_shell;
-from _args import args;
+from ._logging import logger;
+from ._args import kwargs_shell;
+from ._args import args;
 
 class _PoolThread(threading.Thread):
     def __init__(self, poolid):

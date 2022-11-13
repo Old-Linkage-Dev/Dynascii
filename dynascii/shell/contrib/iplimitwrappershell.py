@@ -11,8 +11,8 @@ def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str
     ip_pool_lock = threading.Lock();
     iplimit = int(iplimit);
     logger.debug("Importing accept shell and reject shell for IP Limit Wrapper Shell...");
-    shell_accept = __import__(shell_accept).Shell(**kwargs);
-    shell_reject = __import__(shell_reject).Shell(**kwargs);
+    shell_accept = __import__(shell_accept, fromlist = ["Shell"]).Shell(**kwargs);
+    shell_reject = __import__(shell_reject, fromlist = ["Shell"]).Shell(**kwargs);
 
     def run(conn, addr):
         logger.info('Running ip limit wrapper shell...');
