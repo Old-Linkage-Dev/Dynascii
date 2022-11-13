@@ -11,7 +11,7 @@ def Shell(pipeshell : str, *args, **kwargs):
 
     logger.debug("Initing Pipe Shell...");
     def run(conn, addr) -> None:
-        logger.info('Running pipe shell...');
+        logger.info("Running pipe shell...");
         try:
             logger.debug("Opening piped shell process...");
             _proc = subprocess.Popen(
@@ -29,13 +29,13 @@ def Shell(pipeshell : str, *args, **kwargs):
             _pipe = None;
             logger.debug(err);
             logger.debug(traceback.format_exc());
-            logger.critical('Shell start failed.');
+            logger.critical("Shell start failed.");
             return;
         try:
             logger.info("Sending piped output...");
             _len = 0;
-            _chrs = b'\x00';
-            while _proc.poll() == None and _chrs != b'':
+            _chrs = b"\x00";
+            while _proc.poll() == None and _chrs != b"":
                 _chrs = _pipe.read(1);
                 _len += 1;
                 conn.send(_chrs);
@@ -43,21 +43,21 @@ def Shell(pipeshell : str, *args, **kwargs):
                     logger.info("Sended piped output of %d k bytes." % (_len // 1024));
             logger.info("Sending piped output done.");
         except (BrokenPipeError, ConnectionAbortedError, ConnectionResetError) as err:
-            logger.info('User connection aborted.');
+            logger.info("User connection aborted.");
         except Exception as err:
             logger.error(err);
             logger.debug(traceback.format_exc());
-            logger.critical('Shell failed.');
+            logger.critical("Shell failed.");
         finally:
             logger.debug("Closing piped shell...");
             _pipe.close();
             _proc.kill();
             logger.debug("Closed piped shell.");
-        logger.info('User ended.');
+        logger.info("User ended.");
         return;
 
     for arg in args:
-        logger.warning('Unrecognized arg : %s' % arg);
+        logger.warning("Unrecognized arg : %s" % arg);
     for key in kwargs:
         logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
     logger.debug("Inited Pipe Shell.");

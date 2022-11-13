@@ -15,7 +15,7 @@ def Shell(line = None, *args, **kwargs):
     ];
 
     for arg in args:
-        logger.debug('Unrecognized arg : %s' % arg);
+        logger.debug("Unrecognized arg : %s" % arg);
     for key in kwargs:
         logger.debug("Unrecognized arg : %s : %s" % (key, kwargs[key]));
 

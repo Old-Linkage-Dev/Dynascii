@@ -12,7 +12,7 @@ def Shell(*args, **kwargs):
         logger.info("Running null shell...");
 
     for arg in args:
-        logger.warning('Unrecognized arg : %s' % arg);
+        logger.warning("Unrecognized arg : %s" % arg);
     for key in kwargs:
         logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
     logger.debug("Inited Null Shell.");

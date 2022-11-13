@@ -13,18 +13,18 @@ from ._args import args;
 class _PoolThread(threading.Thread):
     def __init__(self, poolid):
         super().__init__();
-        logger.debug('Initing a thread of pool id %d ...' % poolid);
+        logger.debug("Initing a thread of pool id %d ..." % poolid);
         self.running = True;
         self.poolid = poolid;
-        self.name = 'PoolThread#%d' % self.poolid;
+        self.name = "PoolThread#%d" % self.poolid;
         self.daemon = True;
-        logger.debug('Inited a thread of pool id %d .' % poolid);
+        logger.debug("Inited a thread of pool id %d ." % poolid);
     def run(self):
-        logger.info('%s started.' % self.name);
+        logger.info("%s started." % self.name);
         while self.running:
             try:
                 conn, addr = server.accept();
-                logger.debug('%s calling a shell.' % self.name);
+                logger.debug("%s calling a shell." % self.name);
             except BlockingIOError:
                 if args.no_blocking_delay > 0:
                     time.sleep(args.no_blocking_delay);
@@ -34,34 +34,34 @@ class _PoolThread(threading.Thread):
             except Exception as err:
                 logger.error(err);
                 logger.debug(traceback.format_exc());
-                logger.critical('%s run into an exception listening.' % self.name);
+                logger.critical("%s run into an exception listening." % self.name);
                 break;
             try:
                 args.shell(conn, addr);
-                logger.debug('%s closing connection.' % self.name);
+                logger.debug("%s closing connection." % self.name);
                 conn.close();
-                logger.debug('%s closed connection.' % self.name);
+                logger.debug("%s closed connection." % self.name);
             except Exception as err:
                 logger.error(err);
                 logger.debug(traceback.format_exc());
-                logger.critical('%s run into an exception running.' % self.name);
+                logger.critical("%s run into an exception running." % self.name);
                 break;
-        logger.info('%s ended.' % self.name);
+        logger.info("%s ended." % self.name);
 
 if __name__ == "__main__":
 
     logger.info(
-        'Parametered with \n' +
-        '  - LOG_FILE        = %s\n' % args.log_file +
-        '  - HOST            = %s\n' % args.host +
-        '  - PORT            = %d\n' % args.port +
-        '  - BLOCKING-IO     = %s\n' % args.blocking_io +
-        '  - BACKLOG         = %d\n' % args.backlogs +
-        '  - POOL_SIZE       = %d\n' % args.pool_size +
-        '  - SHELL           = %s\n' % args.shell +
-        '  --\n' +
-        '\n'.join(['  - ' + str(key).upper().ljust(16) + '= ' + str(val) for key, val in kwargs_shell.items()]) +
-        '.');
+        "Parametered with \n" +
+        "  - LOG_FILE        = %s\n" % args.log_file +
+        "  - HOST            = %s\n" % args.host +
+        "  - PORT            = %d\n" % args.port +
+        "  - BLOCKING-IO     = %s\n" % args.blocking_io +
+        "  - BACKLOG         = %d\n" % args.backlogs +
+        "  - POOL_SIZE       = %d\n" % args.pool_size +
+        "  - SHELL           = %s\n" % args.shell +
+        "  --\n" +
+        "\n".join(["  - " + str(key).upper().ljust(16) + "= " + str(val) for key, val in kwargs_shell.items()]) +
+        ".");
 
     logger.info("Creating server ...");
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
 
     logger.info("Creating thread pool ...");
 
-    logger.info('Starting tasks...');
+    logger.info("Starting tasks...");
 
     for poolid in range(args.pool_size):
         thread = _PoolThread(poolid = poolid);
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         pool.append(thread);
         thread.start();
 
-    logger.info('Running...');
+    logger.info("Running...");
 
     try:
         while True:
