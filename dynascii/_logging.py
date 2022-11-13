@@ -61,8 +61,8 @@ def LoggerStreamLevelHandler(level : str):
         _logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s", datefmt="%H:%M");
         _logger_formatter_stream.formatMessage = _format_stream_message;
         _logger_ch_stream = _logging.StreamHandler();
-        _logger_ch_stream.setFormatter(_logger_formatter_stream);
         _logger_ch_stream.setLevel(level = _level);
+        _logger_ch_stream.setFormatter(_logger_formatter_stream);
         return _logger_ch_stream;
     except:
         raise ValueError("Invalid log level: %s." % level);
