@@ -14,4 +14,4 @@ logger.info("Dynascii Loaded.");
 logger.info(f"License: {__license__}");
 logger.info(f"Version: {__version__}");
 logger.info(f"Find on: {__url__}");
-logger.info(f"{__author__} (c) {__copyright__}.");
+logger.info(f"{__author__} (c) {__copyright__}");

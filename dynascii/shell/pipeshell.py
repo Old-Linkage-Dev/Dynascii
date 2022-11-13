@@ -57,8 +57,8 @@ def Shell(pipeshell : str, *args, **kwargs):
         return;
 
     for arg in args:
-        logger.warning("Unrecognized arg : %s" % arg);
+        logger.warning("Unrecognized arg : %s." % arg);
     for key in kwargs:
-        logger.warning("Unrecognized arg : %s : %s" % (key, kwargs[key]));
+        logger.warning("Unrecognized arg : %s : %s." % (key, kwargs[key]));
     logger.debug("Inited Pipe Shell.");
     return run;

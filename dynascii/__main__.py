@@ -13,12 +13,12 @@ from ._args import args;
 class _PoolThread(threading.Thread):
     def __init__(self, poolid):
         super().__init__();
-        logger.debug("Initing a thread of pool id %d ..." % poolid);
+        logger.debug("Initing a thread of pool id %d..." % poolid);
         self.running = True;
         self.poolid = poolid;
         self.name = "PoolThread#%d" % self.poolid;
         self.daemon = True;
-        logger.debug("Inited a thread of pool id %d ." % poolid);
+        logger.debug("Inited a thread of pool id %d." % poolid);
     def run(self):
         logger.info("%s started." % self.name);
         while self.running:
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         "\n".join(["  - " + str(key).upper().ljust(16) + "= " + str(val) for key, val in kwargs_shell.items()]) +
         ".");
 
-    logger.info("Creating server ...");
+    logger.info("Creating server...");
 
     server_args = (socket.SOCK_STREAM,); # Considering socket.SO_REUSEADDR, socket.SO_REUSEPORT
     server = (
@@ -79,7 +79,7 @@ if __name__ == "__main__":
             server.settimeout(args.blocking_timeout);
     pool = [];
 
-    logger.info("Creating thread pool ...");
+    logger.info("Creating thread pool...");
 
     logger.info("Starting tasks...");
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             time.sleep(60);
             for poolid in range(args.pool_size):
                 if not pool[poolid].is_alive():
-                    logger.debug("Restarting PoolThread#%d ..." % poolid);
+                    logger.debug("Restarting PoolThread#%d..." % poolid);
                     thread = _PoolThread(poolid = poolid);
                     logger.debug("%s starting..." % thread.name);
                     pool[poolid] = thread;
@@ -105,11 +105,11 @@ if __name__ == "__main__":
         logger.info("Ending...");
         for poolid in range(args.pool_size):
             if pool[poolid].is_alive():
-                logger.debug("Terminating PoolThread#%d ..." % poolid);
+                logger.debug("Terminating PoolThread#%d..." % poolid);
                 pool[poolid].running = False;
         if not args.blocking_io or args.blocking_timeout > 0:
             for poolid in range(args.pool_size):
                 if pool[poolid].is_alive():
-                    logger.debug("Waiting PoolThread#%d ..." % poolid);
+                    logger.debug("Waiting PoolThread#%d..." % poolid);
                     pool[poolid].join();
         logger.info("Ended.");
