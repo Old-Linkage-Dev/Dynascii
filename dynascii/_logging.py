@@ -67,14 +67,19 @@ def LoggerStreamLevelHandler(level : str):
     except:
         raise ValueError("Invalid log level: %s." % level);
 
-_logger_stream_handler = None;
-
 def set_logger_stream_handler(handler : _logging.StreamHandler):
     global _logger_stream_handler;
     if _logger_stream_handler:
         logger.removeHandler(_logger_stream_handler);
     _logger_stream_handler = handler;
-    logger.addHandler(_logger_stream_handler);
+    if _logger_stream_handler:
+        logger.addHandler(_logger_stream_handler);
+
+def remove_logger_stream_handler():
+    set_logger_stream_handler(None);
 
 logger = _logging.getLogger("dynascii");
 logger.setLevel(_logging.DEBUG);
+
+_logger_stream_handler = LoggerStreamLevelHandler("INFO");
+logger.addHandler(_logger_stream_handler);
