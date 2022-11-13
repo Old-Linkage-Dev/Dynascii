@@ -6,7 +6,7 @@ import logging;
 
 logger = logging.getLogger("dynascii").getChild(__name__);
 
-def Shell(iplimit : int = 8, shell_reject : str = "rejshell", shell_accept : str = "nullshell", *args, **kwargs):
+def Shell(iplimit : int = 8, shell_reject : str = "dynamic.shell.contrib.rejshell", shell_accept : str = "dynamic.shell.nullshell", *args, **kwargs):
 
     logger.debug("Initing IP Limit Wrapper Shell...");
     ip_pool = {};
