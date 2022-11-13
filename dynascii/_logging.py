@@ -3,7 +3,7 @@
 
 import logging as _logging;
 
-def _format_message(record: _logging.LogRecord) -> str:
+def _format_stream_message(record: _logging.LogRecord) -> str:
     _rstc = "\033[0m";
     _mtc = "\033[0;35m";
     _ptc = "\033[0;32m";
@@ -42,6 +42,29 @@ def _format_file_message(record: _logging.LogRecord) -> str:
         return f"[{record.asctime}][{record.levelname:<10}][Dynascii] >> {record.message}";
     else:
         return f"[{record.asctime}][{record.levelname:<10}][{record.threadName}] >> {record.message}";
+
+def LoggerFileHandler(file : str):
+    try:
+        _logger_formatter_file = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s] >> %(message)s", datefmt="%Y-%m-%d-%H:%M:%S");
+        _logger_formatter_file.formatMessage = _format_stream_message;
+        _logger_ch_file = _logging_handlers.TimedRotatingFileHandler(file, when = "D", interval = 60, backupCount = 12, encoding = "utf8");
+        _logger_ch_file.setLevel(_logging.DEBUG);
+        _logger_ch_file.setFormatter(_logger_formatter_file);
+        return _logger_ch_file;
+    except:
+        raise ValueError("Invalid log file: %s." % file);
+
+def LoggerStreamLevelHandler(level : str):
+    try:
+        _level = getattr(_logging, level.upper(), None);
+        _logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s", datefmt="%H:%M");
+        _logger_formatter_stream.formatMessage = _format_stream_message;
+        _logger_ch_stream = _logging.StreamHandler();
+        _logger_ch_stream.setFormatter(_logger_formatter_stream);
+        _logger_ch_stream.setLevel(level = _level);
+        return _logger_ch_stream;
+    except:
+        raise ValueError("Invalid log level: %s." % level);
 
 def set_stream_level(level : int):
     _logger_ch_stream.setLevel(level = level);
