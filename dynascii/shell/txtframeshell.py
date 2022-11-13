@@ -34,7 +34,7 @@ def Shell(txtframefile : str, interval : float = 0.125, *args, **kwargs):
                     conn.send(_sends);
                     _sends = b"\x1Bc\x1B[H";
                     if _f % 200 == 0:
-                        logger.info("Frame play #%d" % _f);
+                        logger.info("Frame played #%d" % _f);
                 else:
                     _sends += line[:-1].encode("utf8") + b"\r\n";
             logger.info("Frame play ended.");
