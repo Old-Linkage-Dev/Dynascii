@@ -40,7 +40,7 @@ def _format_message(record: _logging.LogRecord) -> str:
 def set_stream_level(level : int):
     _logger_ch_stream.setLevel(level = level);
 
-_logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s", datefmt="%H:%M");
+_logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s] >> %(message)s", datefmt="%H:%M");
 _logger_formatter_stream.datefmt = "%H:%M";
 _logger_formatter_stream.formatMessage = _format_message;
 _logger_ch_stream = _logging.StreamHandler();

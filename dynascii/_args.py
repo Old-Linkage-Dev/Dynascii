@@ -36,7 +36,7 @@ def _uint16(val):
 
 def _LoggerFile(file : str):
     try:
-        _logger_formatter_file = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s", datefmt="%Y-%m-%d-%H:%M:%S");
+        _logger_formatter_file = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s] >> %(message)s", datefmt="%Y-%m-%d-%H:%M:%S");
         _logger_ch_file = _logging_handlers.TimedRotatingFileHandler(file, when = "D", interval = 60, backupCount = 12, encoding = "utf8");
         _logger_ch_file.setLevel( _logging.DEBUG);
         _logger_ch_file.setFormatter(_logger_formatter_file);
@@ -49,7 +49,7 @@ def _LoggerLevel(level : str):
     try:
         _level = getattr( _logging, level.upper(), None);
         if not isinstance(_level, int):
-            raise ValueError("Invalid log level: %s" % level);
+            raise ValueError("Invalid log level: %s." % level);
         _set_stream_level(_level);
         return _level;
     except:
