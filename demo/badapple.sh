@@ -1,6 +1,6 @@
 cd $(pwd)"/"$(dirname $0)
 while :; do
-python3 ./Dynascii.py \
+python3 -m dynascii \
     --log './dynascii_badapple.log' \
     --log-level INFO \
     --host 127.0.0.1 \

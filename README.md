@@ -22,7 +22,7 @@ These implementations may cause some difficulty to read the code and to debug. B
 
 Run the _badapple.sh_ or _stillalive.sh_ to start a server, where all configs can be found and modified.
 
-Use _./Dynascii.py --help_ for help:
+Use python3 -m dynascii --help_ for help:
 
 - --log log_file                : str, path to log file
 - --log-level log_level = INFO  : str, name of logging level
