@@ -8,6 +8,7 @@ import sys                              as _sys;
 from ._logging import LoggerFileHandler         as _LoggerFileHandler;
 from ._logging import LoggerStreamLevelHandler  as _LoggerStreamLevelHandler;
 from ._logging import set_logger_stream_handler as _set_logger_stream_handler;
+from ._logging import _logger_stream_handler    as _logger_stream_handler;
 from ._logging import logger                    as _logger;
 
 def _try_default(f, default):
@@ -69,7 +70,7 @@ _parser.add_argument(
 _parser.add_argument(
     "--log-level",
     dest = "log_level", type = _LoggerStreamLevelHandlerSetting,
-    default = _LoggerStreamLevelHandlerSetting("INFO"),
+    default = _logger_stream_handler,
     help = "str : name of logging level"
 );
 
