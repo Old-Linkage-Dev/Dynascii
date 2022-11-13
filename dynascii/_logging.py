@@ -29,19 +29,19 @@ def _format_message(record: _logging.LogRecord) -> str:
         _lc = "\033[1;30m";
         _mc = "\033[1;30m";
     if record.threadName == "MainThread" and record.module in ("dynascii", "__init__", "__main__"):
-        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[Dynascii]{_fw}{_mc}{record.message}';
+        return f"{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[Dynascii]{_fw}{_mc}{record.message}";
     elif record.threadName == "MainThread":
-        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[{record.module}]{_fw}{_mc}{record.message}';
+        return f"{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[{record.module}]{_fw}{_mc}{record.message}";
     elif record.module in ("dynascii", "__init__", "__main__"):
-        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_mc}{record.message}';
+        return f"{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_mc}{record.message}";
     else:
-        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_modc}[{record.module}]{_fw}{_mc}{record.message}';
+        return f"{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_modc}[{record.module}]{_fw}{_mc}{record.message}";
 
 def set_stream_level(level : int):
     _logger_ch_stream.setLevel(level = level);
 
-_logger_formatter_stream = _logging.Formatter(fmt='[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s', datefmt='%H:%M');
-_logger_formatter_stream.datefmt = '%H:%M';
+_logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s] >> [%(threadName)s] >> [%(module)s] >> %(message)s", datefmt="%H:%M");
+_logger_formatter_stream.datefmt = "%H:%M";
 _logger_formatter_stream.formatMessage = _format_message;
 _logger_ch_stream = _logging.StreamHandler();
 _logger_ch_stream.setFormatter(_logger_formatter_stream);
