@@ -28,9 +28,11 @@ def _format_message(record: _logging.LogRecord) -> str:
         _fw = "\033[1;30m >> ";
         _lc = "\033[1;30m";
         _mc = "\033[1;30m";
-    if record.threadName == 'MainThread':
+    if record.threadName == "MainThread" and record.module in ("dynascii", "__init__", "__main__"):
+        return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[Dynascii]{_fw}{_mc}{record.message}';
+    elif record.threadName == "MainThread":
         return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_mtc}[{record.module}]{_fw}{_mc}{record.message}';
-    elif record.module == 'Dynascii':
+    elif record.module in ("dynascii", "__init__", "__main__"):
         return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_mc}{record.message}';
     else:
         return f'{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_modc}[{record.module}]{_fw}{_mc}{record.message}';
