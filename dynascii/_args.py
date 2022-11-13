@@ -1,4 +1,6 @@
 
+# -*- coding: UTF-8 -*-
+
 import argparse                         as _argparse;
 import logging                          as _logging;
 import logging.handlers                 as _logging_handlers;

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 
 import logging;
 from .. import lineshell as _ls;

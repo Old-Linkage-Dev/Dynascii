@@ -1,4 +1,6 @@
 
+# -*- coding: UTF-8 -*-
+
 import logging as _logging;
 
 def _format_message(record: _logging.LogRecord) -> str:
