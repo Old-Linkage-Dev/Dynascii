@@ -37,8 +37,15 @@ def _format_message(record: _logging.LogRecord) -> str:
     else:
         return f"{_rstc}{record.asctime} {_lc}{record.levelname:<10}{_fw}{_ptc}[{record.threadName}]{_fw}{_modc}[{record.module}]{_fw}{_mc}{record.message}";
 
+def _format_file_message(record: _logging.LogRecord) -> str:
+    if record.module in ("dynascii", "__init__", "__main__"):
+        return f"[{record.asctime}][{record.levelname:<10}][Dynascii] >> {record.message}";
+    else:
+        return f"[{record.asctime}][{record.levelname:<10}][{record.threadName}] >> {record.message}";
+
 def set_stream_level(level : int):
     _logger_ch_stream.setLevel(level = level);
+
 
 _logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s] >> %(message)s", datefmt="%H:%M");
 _logger_formatter_stream.datefmt = "%H:%M";
