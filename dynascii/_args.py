@@ -20,7 +20,7 @@ def _Shell(module : str):
     try:
         return __import__(module, fromlist = ["Shell"]).Shell(**kwargs_shell);
     except:
-        raise _argparse.ArgumentError(message = "Fail to load shell indicated, check shell name and shell args.");
+        raise _argparse.ArgumentError(message = "Fail to load shell indicated by %s, check shell name and shell args." % module);
 
 def _LoggerFileHandlerSetting(file : str):
     _handler = _LoggerFileHandler(file = file);
