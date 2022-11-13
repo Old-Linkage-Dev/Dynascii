@@ -65,18 +65,18 @@ else:
 
 # _parser = _argparse.ArgumentParser(description = open("./README.md", 'r').read());
 _parser = _argparse.ArgumentParser(description = "");
-_parser.add_argument("--log",                dest = "log_file", type = _LoggerFile, default = None,              help = "str : path to log file");
-_parser.add_argument("--log-level",          dest = "log_level", type = _LoggerLevel, default = _logging.INFO,  help = "str : name of logging level");
-_parser.add_argument("-6",                   dest = "use_v6", action = "store_true", default = False,            help = "flag : use of IPv6");
-_parser.add_argument("--host",               dest = "host", type = str, default = "",                            help = "str : hostname of server");
-_parser.add_argument("--port",               dest = "port", type = _uint16, default = 23,                        help = "uint16 : port of server");
-_parser.add_argument("--blocking-io",        dest = "blocking_io", action = "store_true", default = False,       help = "bool : use of blocking IO");
-_parser.add_argument("--no-blocking-io",     dest = "blocking_io", action = "store_false", default = False,      help = "bool : use of blocking IO, flagged for not using");
-_parser.add_argument("--blocking-timeout",   dest = "blocking_timeout", type = _uint, default = 3,               help = "uint : time of blocking IO timeout, 0 for no timeout");
-_parser.add_argument("--no-blocking-delay",  dest = "no_blocking_delay", type = _uint, default = 1,              help = "uint : time of non-blocking IO inter-polling delay");
-_parser.add_argument("--backlogs",           dest = "backlogs", type = _uint, default = 16,                      help = "uint : backlogs of server");
-_parser.add_argument("--poolsize",           dest = "pool_size", type = _uint, default = 32,                     help = "uint : size of server thread pool");
-_parser.add_argument("--shell",              dest = "shell", type = _Shell, default = "nullshell",               help = "module : name of shell module");
+_parser.add_argument("--log",                dest = "log_file", type = _LoggerFile, default = None,                 help = "str : path to log file");
+_parser.add_argument("--log-level",          dest = "log_level", type = _LoggerLevel, default = _logging.INFO,      help = "str : name of logging level");
+_parser.add_argument("-6",                   dest = "use_v6", action = "store_true", default = False,               help = "flag : use of IPv6");
+_parser.add_argument("--host",               dest = "host", type = str, default = "",                               help = "str : hostname of server");
+_parser.add_argument("--port",               dest = "port", type = _uint16, default = 23,                           help = "uint16 : port of server");
+_parser.add_argument("--blocking-io",        dest = "blocking_io", action = "store_true", default = False,          help = "bool : use of blocking IO");
+_parser.add_argument("--no-blocking-io",     dest = "blocking_io", action = "store_false", default = False,         help = "bool : use of blocking IO, flagged for not using");
+_parser.add_argument("--blocking-timeout",   dest = "blocking_timeout", type = _uint, default = 3,                  help = "uint : time of blocking IO timeout, 0 for no timeout");
+_parser.add_argument("--no-blocking-delay",  dest = "no_blocking_delay", type = _uint, default = 1,                 help = "uint : time of non-blocking IO inter-polling delay");
+_parser.add_argument("--backlogs",           dest = "backlogs", type = _uint, default = 16,                         help = "uint : backlogs of server");
+_parser.add_argument("--poolsize",           dest = "pool_size", type = _uint, default = 32,                        help = "uint : size of server thread pool");
+_parser.add_argument("--shell",              dest = "shell", type = _Shell, default = "dynascii.shell.nullshell",   help = "module : name of shell module");
 
 kwargs_shell = {};
 while _args_shell:
