@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import logging as _logging;
+import logging.handlers as _logging_handlers;
 
 def _format_stream_message(record: _logging.LogRecord) -> str:
     _rstc = "\033[0m";
@@ -66,15 +67,14 @@ def LoggerStreamLevelHandler(level : str):
     except:
         raise ValueError("Invalid log level: %s." % level);
 
-def set_stream_level(level : int):
-    _logger_ch_stream.setLevel(level = level);
+_logger_stream_handler = None;
 
+def set_logger_stream_handler(handler : _logging.StreamHandler):
+    global _logger_stream_handler;
+    if _logger_stream_handler:
+        logger.removeHandler(_logger_stream_handler);
+    _logger_stream_handler = handler;
+    logger.addHandler(_logger_stream_handler);
 
-_logger_formatter_stream = _logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(threadName)s][%(module)s] >> %(message)s", datefmt="%H:%M");
-_logger_formatter_stream.datefmt = "%H:%M";
-_logger_formatter_stream.formatMessage = _format_message;
-_logger_ch_stream = _logging.StreamHandler();
-_logger_ch_stream.setFormatter(_logger_formatter_stream);
 logger = _logging.getLogger("dynascii");
 logger.setLevel(_logging.DEBUG);
-logger.addHandler(_logger_ch_stream);
