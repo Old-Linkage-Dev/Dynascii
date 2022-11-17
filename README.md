@@ -2,7 +2,7 @@
 
 ## What it is?
 
-Dynascii is a light-weighted utility or application to casting things to Telnet. It is implemented in Python and aimed to deploy quickly and easily on a server with a proper environment.
+Dynascii is a light-weighted utility or application to casting things to a stream. It is implemented in Python and aimed to deploy quickly and easily on a server with a proper environment.
 
 ## Can I have a preview?
 
