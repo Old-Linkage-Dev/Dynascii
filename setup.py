@@ -35,6 +35,13 @@ setuptools.setup(
         "Bug Reports": "https://github.com/Tarcadia/Dynascii/issues",
         "Source": "https://github.com/Tarcadia/Dynascii"
     },
+    keywords = [
+        "Dynascii",
+        "ASCII",
+        "ASCII Art",
+        "TELNET",
+        "Tarcadia"
+    ],
     classifiers = [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
