@@ -7,6 +7,9 @@ logger = logging.getLogger("dynascii").getChild(__name__);
 
 def Shell(lines = [], *args, **kwargs):
 
+    if isinstance(lines, str):
+        lines = lines.split("|");
+    
     logger.debug("Initing Line Shell...");
 
     def run(conn, addr) -> None:

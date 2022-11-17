@@ -20,8 +20,11 @@ def _try_default(f, default):
 def _Shell(module : str):
     try:
         return __import__(module, fromlist = ["Shell"]).Shell(**kwargs_shell);
-    except:
-        raise _argparse.ArgumentError(message = "Fail to load shell indicated by %s, check shell name and shell args." % module);
+    except Exception as e:
+        raise _argparse.ArgumentError(message = (
+            "Fail to load shell indicated by %s, check shell name and shell args.\n" % module +
+            "%s" % e
+        ));
 
 def _LoggerFileHandlerSetting(file : str):
     _handler = _LoggerFileHandler(file = file);
@@ -88,7 +91,10 @@ _parser.add_argument("--shell",              dest = "shell", type = _Shell, defa
 kwargs_shell = {};
 while _args_shell:
     _s = _args_shell.pop(0);
-    if len(_args_shell) >= 1 and _s.startswith("--"):
+    if _s.startswith("--") and "=" in _s:
+        _sl = _s.split("=", 1);
+        kwargs_shell[_sl[0][:2]] = _sl[1];
+    elif _s.startswith("--") and len(_args_shell) >= 1 :
         kwargs_shell[_s[2:]] = _args_shell.pop(0);
 
 args = _parser.parse_args(_args_dynascii);
