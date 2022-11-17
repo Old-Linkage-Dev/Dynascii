@@ -3,3 +3,7 @@
 *.log
 */.local/*
 *__pycache__*
+
+## Generated files for distribution
+dist
+*.egg-info
