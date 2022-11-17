@@ -2,7 +2,7 @@
 
 ## What it is?
 
-Dynascii is a light-weighted utility or application to casting things to Telnet. It is implemented in Python and aimed to deploy quickly and easily on a server with a proper environment.
+Dynascii is a light-weighted utility or application to casting things to a stream. It is implemented in Python and aimed to deploy quickly and easily on a server with a proper environment.
 
 ## Can I have a preview?
 
@@ -22,4 +22,18 @@ These implementations may cause some difficulty to read the code and to debug. B
 
 Run the _badapple.sh_ or _stillalive.sh_ to start a server, where all configs can be found and modified.
 
-Use _./Dynascii.py --help_ for help.
+Use python3 -m dynascii --help_ for help:
+
+- --log log_file                : str, path to log file
+- --log-level log_level = INFO  : str, name of logging level
+- -6                            : flag, use of IPv6
+- --host host                   : str, hostname of server
+- --port port = 23              : uint16, port of server
+- --blocking-io                 : flag, use of blocking IO
+- --no-blocking-io              : flag, use of blocking IO, flagged for not using
+- --blocking-timeout blocking_timeout = 3   : uint, time of blocking IO timeout, 0 for no timeout
+- --no-blocking-delay no_blocking_delay = 1 : uint, time of non-blocking IO inter-polling delay
+- --backlogs backlogs = 16                  : uint, backlogs of server
+- --poolsize pool_size = 32                 : uint, size of server thread pool
+- --shell shell = nullshell                 : module, name of shell module
+- -- --xxx xxx --yyy yyy                    : extra params for shell
