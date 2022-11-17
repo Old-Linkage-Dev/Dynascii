@@ -8,7 +8,7 @@ __url__ = "https://github.com/Tarcadia/Dynascii";
 __copyright__ = "Copyright 2021-2022";
 __credits__ = ["Tarcadia"];
 __license__ = "GNU GENERAL PUBLIC LICENSE VERSION 3";
-__version__ = "Release 1.4";
+__version__ = "Release 1.4.0.1";
 
 logger.info("Dynascii Loaded.");
 logger.info(f"License: {__license__}");
