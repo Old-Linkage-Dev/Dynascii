@@ -93,7 +93,7 @@ while _args_shell:
     _s = _args_shell.pop(0);
     if _s.startswith("--") and "=" in _s:
         _sl = _s.split("=", 1);
-        kwargs_shell[_sl[0][:2]] = _sl[1];
+        kwargs_shell[_sl[0][2:]] = _sl[1];
     elif _s.startswith("--") and len(_args_shell) >= 1 :
         kwargs_shell[_s[2:]] = _args_shell.pop(0);
 
