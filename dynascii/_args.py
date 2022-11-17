@@ -88,7 +88,10 @@ _parser.add_argument("--shell",              dest = "shell", type = _Shell, defa
 kwargs_shell = {};
 while _args_shell:
     _s = _args_shell.pop(0);
-    if len(_args_shell) >= 1 and _s.startswith("--"):
+    if _s.startswith("--") and "=" in _s:
+        _sl = _s.split("=", 1);
+        kwargs_shell[_sl[0][:2]] = _sl[1];
+    elif _s.startswith("--") and len(_args_shell) >= 1 :
         kwargs_shell[_s[2:]] = _args_shell.pop(0);
 
 args = _parser.parse_args(_args_dynascii);
