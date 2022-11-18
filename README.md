@@ -34,9 +34,9 @@ These implementations may cause some difficulty to read the code and to debug. B
 
 ## How to use?
 
-Run the _badapple.sh_ or _stillalive.sh_ to start a server, where all configs can be found and modified.
+Check for the repository [Dynascii](https://github.com/Tarcadia/Dynascii). Run the _demo/badapple.sh_ or _demo/stillalive.sh_ to start a server, where most configs can be found and modified.
 
-Use python3 -m dynascii --help_ for help:
+Use python3 -m dynascii --help_ for help, and there are listed helps below:
 
 - --log log_file                : str, path to log file
 - --log-level log_level = INFO  : str, name of logging level
