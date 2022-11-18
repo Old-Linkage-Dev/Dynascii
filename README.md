@@ -1,5 +1,19 @@
 # ==Dynascii==
 
+## Happy Birthday Dynascii :tada::tada::tada:
+
+Let's celebrate the birth of Dynascii for 1 Year. :tada::tada::tada:
+
+The prototype of Dynascii was brought out on 12th November 2021 (UTC+8).
+I still remember that afternoon, errorer's [StillAlive on EL screen](https://www.bilibili.com/video/BV1cU4y1A7ud) shocked me, and I decided this is what I want to make online.
+And after an afternoon, the [beginning version](https://github.com/Tarcadia/Telnet-Cast-Portal_StillAlive) came out.
+Later after the dinner, I started building an environment to move it onto the internet.
+At midnight 13th November, around 1.30 am or 3.00 am (UTC+8) that I cannot remember, Still Alive is online.
+After two days I realized this could be a better project, so I started Dynascii project and placed Bad Apple together with Still Alive from errorer.
+
+So, 16th November 2021 (UTC+8) is the birth of Dynascii because it is formally online with the functions, and today is the 368th day of Dynascii.
+During all the days, Dynascii never down even though there are DoS attacks and other burdens.
+
 ## What it is?
 
 Dynascii is a light-weighted utility or application to casting things to a stream. It is implemented in Python and aimed to deploy quickly and easily on a server with a proper environment.
