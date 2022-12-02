@@ -32,8 +32,8 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     url = dynascii.__url__,
     project_urls = {
-        "Bug Reports": "https://github.com/Tarcadia/Dynascii/issues",
-        "Source": "https://github.com/Tarcadia/Dynascii"
+        "Bug Reports": dynascii.__url__ + "/issues",
+        "Source": dynascii.__url__,
     },
     keywords = [
         "Dynascii",
